@@ -14,16 +14,18 @@ The practical goal is to make reported sensor performance comparable across pape
 
 **One record** = one reported quantitative sensor-performance measurement for a specific photonic material or device architecture, analyte or sensing target, and source under stated experimental or simulation conditions.
 
-This means that one paper can contribute multiple records. For example, the same UiO-66 photonic crystal sensor may have separate records for sensitivity, limit of detection, response time, recovery time, and selectivity.
+This means that one paper can contribute multiple records. For example, the same UiO-66 photonic crystal sensor may have separate records for sensitivity, limit_of_detection, response_time, recovery_time, wavelength_shift, quality_factor, resolution, and detection_range.
 
 ## Examples of Records
 
-| Example | Why it counts |
-|---------|---------------|
-| Limit of detection = 1.64 ppm for a UiO-66 3D photonic crystal sensor detecting chlorobenzene vapor in Wang et al. 2022 | One numeric sensor metric tied to one material, one analyte, one source, and one experimental context |
-| RI sensitivity = 4629 nm/RIU for a hollow-core photonic crystal fiber Mach-Zehnder interferometer in Nazeri et al. 2020 | One quantitative performance value for one photonic crystal fiber sensing architecture |
-| Limit of detection = 60 pM for a fiber-tip photonic crystal biosensor detecting anti-IgG in serum in Dolci et al. 2025 | One biosensing performance metric with analyte, medium, value, unit, and source |
-| Sensitivity = 50.23 nm/RIU for an Au/1D photonic crystal refractive-index sensor in Shaban et al. 2017 | One extracted refractive-index sensing metric for a plasmonic/photonic hybrid material |
+Literal example row from `data/processed/dataset.csv`:
+
+```csv
+record_id,material_name,material_class,sensor_architecture,sensing_target,measurement_type,measurement_value,measurement_unit,source_id,source_url,doi,raw_file,extraction_confidence,notes
+rec_wang_2022_uio66_lod_001,UiO-66 3D photonic crystal,MOF-based photonic crystal,3D photonic crystal vapor sensor,chlorobenzene vapor,limit_of_detection,1.64,ppm,paper_wang_2022_uio66_pc,https://doi.org/10.1039/D2RA05494A,10.1039/D2RA05494A,data/raw/pdf/rsc_2022_uio66_3d_photonic_crystal_optical_sensor.pdf,high,"Example row for Practice 1; concentration range 0-500 ppm; value verified from article abstract/conclusion."
+```
+
+This row counts as a record because it contains one numeric sensing-performance metric (`limit_of_detection = 1.64 ppm`) for one material, one sensor architecture, one sensing target, and one source.
 
 ## Non-Record Examples
 
@@ -45,7 +47,7 @@ The machine-readable schema is stored in `specs/dataset_schema.json`. The final 
 | `material_class` | Broad class such as 1D photonic crystal, 3D photonic crystal, photonic crystal fiber, MOF-based photonic crystal, or plasmonic/photonic hybrid |
 | `sensor_architecture` | Device geometry or sensing platform |
 | `sensing_target` | Analyte or physical property being detected |
-| `measurement_type` | Metric name: sensitivity, limit_of_detection, response_time, recovery_time, wavelength_shift, quality_factor, selectivity, etc. |
+| `measurement_type` | Controlled metric name: sensitivity, limit_of_detection, wavelength_shift, response_time, recovery_time, quality_factor, resolution, or detection_range |
 | `measurement_value` | Numeric value of the metric |
 | `measurement_unit` | Unit corresponding to `measurement_value` |
 | `source_id` | Link to `specs/source_map.json` |
@@ -58,6 +60,7 @@ The machine-readable schema is stored in `specs/dataset_schema.json`. The final 
 ## Ambiguous Cases and Decisions
 
 - If one article reports multiple metrics for the same sensor, store each metric as a separate record.
+- `measurement_type` must use only one of the controlled values: `sensitivity`, `limit_of_detection`, `wavelength_shift`, `response_time`, `recovery_time`, `quality_factor`, `resolution`, `detection_range`.
 - If a metric is reported for several analyte concentrations, store the summary metric as one record and keep the interval in `notes`. If every concentration has a separate numeric response, split it into separate records during extraction.
 - If both experimental and simulation data are reported, prioritize experimental values. Simulation-only values can be included only when `notes` clearly states that they are simulated.
 - If the same performance value appears in a review and in the original paper, use the original paper as the primary source. Reviews are useful for finding sources and cross-checking values.

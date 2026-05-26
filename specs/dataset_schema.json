@@ -49,17 +49,17 @@
       "name": "measurement_type",
       "type": "string",
       "required": true,
-      "description": "Reported performance metric.",
+      "description": "Reported performance metric selected from the controlled vocabulary.",
       "example": "limit_of_detection",
-      "allowed_examples": [
+      "allowed_values": [
         "sensitivity",
         "limit_of_detection",
+        "wavelength_shift",
         "response_time",
         "recovery_time",
-        "wavelength_shift",
         "quality_factor",
-        "refractive_index_resolution",
-        "selectivity"
+        "resolution",
+        "detection_range"
       ]
     },
     {
