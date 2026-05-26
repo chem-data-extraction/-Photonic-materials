@@ -71,7 +71,11 @@ def clean_dataframe(df: pd.DataFrame) -> pd.DataFrame:
         if col in ("record_id", "aptamer_sequence"):
             continue
         out[col] = out[col].map(normalize_missing_values)
-    if "measurement_value" in out.columns and "measurement_unit" in out.columns:
+    if (
+        "normalized_value_nm" in out.columns
+        and "measurement_value" in out.columns
+        and "measurement_unit" in out.columns
+    ):
         out["normalized_value_nm"] = [
             normalize_measurement_to_nm(v, u)
             for v, u in zip(out["measurement_value"], out["measurement_unit"])

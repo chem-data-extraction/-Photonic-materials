@@ -1,121 +1,108 @@
 {
   "schema_version": "0.1.0",
-  "dataset_title": "Aptamer–protein binding dataset",
+  "dataset_title": "Photonic materials for optical sensing",
   "fields": [
     {
       "name": "record_id",
       "type": "string",
       "required": true,
-      "description": "Stable unique identifier for one binding measurement record.",
-      "example": "rec_apt_thrombin_2018_pdf_001"
+      "description": "Stable unique identifier for one reported sensing-performance measurement.",
+      "example": "rec_uio66_chlorobenzene_lod_2022_001"
     },
     {
-      "name": "aptamer_sequence",
+      "name": "material_name",
       "type": "string",
       "required": true,
-      "description": "Nucleotide sequence of the aptamer (DNA or RNA), 5' to 3'.",
-      "example": "GGTTGGTGTGGTTGG",
-      "normalization_rule": "Uppercase; remove spaces and hyphens; keep only A,C,G,T,U."
+      "description": "Name of the photonic material or active sensing structure.",
+      "example": "UiO-66 photonic crystal"
     },
     {
-      "name": "target_name",
+      "name": "material_class",
       "type": "string",
       "required": true,
-      "description": "Name of the protein or biomolecular target.",
-      "example": "Thrombin"
+      "description": "Broad class of photonic material.",
+      "example": "MOF-based photonic crystal",
+      "allowed_examples": [
+        "1D photonic crystal",
+        "3D photonic crystal",
+        "photonic crystal fiber",
+        "plasmonic/photonic hybrid",
+        "MOF-based photonic crystal",
+        "nanophotonic resonator"
+      ]
     },
     {
-      "name": "target_type",
+      "name": "sensor_architecture",
       "type": "string",
-      "required": false,
-      "description": "Broad classification of the target (e.g. enzyme, receptor, toxin).",
-      "example": "serine protease"
+      "required": true,
+      "description": "Device geometry or sensing platform used in the source.",
+      "example": "3D photonic crystal vapor sensor"
+    },
+    {
+      "name": "sensing_target",
+      "type": "string",
+      "required": true,
+      "description": "Analyte or physical property being detected.",
+      "example": "chlorobenzene vapor"
     },
     {
       "name": "measurement_type",
       "type": "string",
       "required": true,
-      "description": "Reported affinity or binding metric (Kd, Ki, IC50, etc.).",
-      "example": "Kd"
+      "description": "Reported performance metric.",
+      "example": "limit_of_detection",
+      "allowed_examples": [
+        "sensitivity",
+        "limit_of_detection",
+        "response_time",
+        "recovery_time",
+        "wavelength_shift",
+        "quality_factor",
+        "refractive_index_resolution",
+        "selectivity"
+      ]
     },
     {
       "name": "measurement_value",
       "type": "number",
-      "required": false,
-      "description": "Numeric value as reported in the source.",
-      "example": 0.5
+      "required": true,
+      "description": "Numeric value of the reported performance metric.",
+      "example": 1.64
     },
     {
       "name": "measurement_unit",
       "type": "string",
-      "required": false,
-      "description": "Unit of measurement_value (nM, μM, pM, etc.).",
-      "example": "nM",
-      "normalization_rule": "Map synonyms to nM, μM, pM, M; store original in notes if converted."
-    },
-    {
-      "name": "normalized_value_nm",
-      "type": "number",
-      "required": false,
-      "description": "Binding affinity converted to nanomolar (nM) for comparison.",
-      "example": 0.5,
-      "normalization_rule": "Convert measurement_value using measurement_unit to nM."
-    },
-    {
-      "name": "assay_method",
-      "type": "string",
-      "required": false,
-      "description": "Experimental method used to obtain the measurement.",
-      "example": "surface plasmon resonance"
-    },
-    {
-      "name": "buffer",
-      "type": "string",
-      "required": false,
-      "description": "Buffer composition during the binding assay.",
-      "example": "PBS with 5 mM MgCl2"
-    },
-    {
-      "name": "temperature_c",
-      "type": "number",
-      "required": false,
-      "description": "Assay temperature in degrees Celsius.",
-      "example": 25
+      "required": true,
+      "description": "Unit corresponding to measurement_value.",
+      "example": "ppm"
     },
     {
       "name": "source_id",
       "type": "string",
       "required": true,
       "description": "Identifier linking to an entry in specs/source_map.json.",
-      "example": "paper_green_2018"
-    },
-    {
-      "name": "source_type",
-      "type": "string",
-      "required": false,
-      "description": "Category of source (paper, database, web page, etc.).",
-      "example": "scientific_paper"
+      "example": "paper_wang_2022_uio66_pc"
     },
     {
       "name": "source_url",
       "type": "string",
       "required": false,
-      "description": "URL or landing page for the source.",
-      "example": "https://doi.org/10.1021/example"
+      "description": "DOI landing page, article page, or repository URL.",
+      "example": "https://doi.org/10.1039/D2RA05494A"
     },
     {
       "name": "doi",
       "type": "string",
       "required": false,
       "description": "Digital Object Identifier when available.",
-      "example": "10.1021/example"
+      "example": "10.1039/D2RA05494A"
     },
     {
-      "name": "extraction_method",
+      "name": "raw_file",
       "type": "string",
       "required": false,
-      "description": "How the record was obtained (pdf_manual, pdf_table, web_scrape, etc.).",
-      "example": "pdf_table"
+      "description": "Path to the downloaded raw PDF or source snapshot used for extraction.",
+      "example": "data/raw/pdf/rsc_2022_uio66_3d_photonic_crystal_optical_sensor.pdf"
     },
     {
       "name": "extraction_confidence",
@@ -128,8 +115,8 @@
       "name": "notes",
       "type": "string",
       "required": false,
-      "description": "Free-text notes, caveats, or provenance details.",
-      "example": "Value taken from Table 2; unit inferred from caption."
+      "description": "Free-text notes for details that are not common enough to deserve separate columns.",
+      "example": "Operating wavelength 1550 nm; response measured in gas phase at room temperature."
     }
   ]
 }

@@ -1,171 +1,538 @@
 {
-  "topic": "Aptamer–protein binding measurements",
-  "root_query": "aptamer protein binding Kd SPR SELEX experimental affinity",
-  "source_map_version": "0.1.0",
+  "topic": "Photonic materials for optical sensing",
+  "root_query": "photonic crystal optical sensor sensitivity limit of detection gas biosensing refractive index",
+  "source_map_version": "0.2.0",
+  "access_date": "2026-05-26",
+  "selection_scope": {
+    "included": [
+      "photonic crystals used as optical sensors",
+      "photonic crystal fibers for gas or refractive-index sensing",
+      "MOF-based photonic crystal sensors",
+      "plasmonic/photonic hybrid sensors",
+      "fiber-tip photonic crystal biosensors"
+    ],
+    "excluded": [
+      "sources without quantitative sensing-performance values",
+      "general photonics papers without sensing targets",
+      "duplicate review values when the primary article is available"
+    ]
+  },
+  "source_search_strategy": [
+    {
+      "channel": "local_raw_pdf_audit",
+      "queries_or_inputs": [
+        "data/raw/pdf/*.pdf",
+        "PDF metadata title, DOI, abstract, and first-page text"
+      ],
+      "purpose": "Identify the already downloaded source files and align them with stable source_id values."
+    },
+    {
+      "channel": "publisher_and_doi_lookup",
+      "queries_or_inputs": [
+        "\"photonic crystal\" \"gas sensor\" sensitivity",
+        "\"MOF\" \"photonic crystal\" \"gas sensing\"",
+        "\"hollow-core photonic crystal fiber\" \"gas sensing\"",
+        "\"plasmonic/1D photonic crystal\" sensing"
+      ],
+      "purpose": "Verify DOI landing pages, access conditions, and likely extraction targets."
+    },
+    {
+      "channel": "snowballing_from_reviews",
+      "queries_or_inputs": [
+        "Wang 2022 MOF photonic crystal gas sensing review",
+        "Yu 2020 hollow-core photonic crystal fiber gas sensing review",
+        "Dantl 2022 stimuli-responsive one-dimensional photonic crystals",
+        "Chiappini 2020 photonic crystal chromatic sensors"
+      ],
+      "purpose": "Use reviews to find primary experimental papers and coverage gaps."
+    }
+  ],
+  "priority_sources": [
+    {
+      "rank": 1,
+      "source_id": "paper_wang_2022_uio66_pc",
+      "reason": "Open-access primary paper with several directly reported sensor metrics for a MOF-based 3D photonic crystal."
+    },
+    {
+      "rank": 2,
+      "source_id": "paper_nazeri_2020_hcpcf_mzi_gas",
+      "reason": "Open-access primary paper with explicit RI sensitivity, gas targets, and response/recovery behavior."
+    },
+    {
+      "rank": 3,
+      "source_id": "paper_dolci_2025_fiber_tip_pc_biosensing",
+      "reason": "Recent open-access biosensing example that expands the dataset beyond gas sensing."
+    },
+    {
+      "rank": 4,
+      "source_id": "paper_shaban_2017_plasmonic_1d_pc",
+      "reason": "Primary plasmonic/photonic hybrid sensor paper with glucose and refractive-index sensing metrics."
+    },
+    {
+      "rank": 5,
+      "source_id": "paper_lin_2018_seira_on_chip_gas",
+      "reason": "Primary on-chip gas-sensing paper; extract only values that are reproducibly available under allowed access."
+    }
+  ],
+  "conflict_resolution_rules": [
+    "Prefer a primary experimental article over a review or database summary.",
+    "Prefer supplementary tables over plotted values when both report the same metric.",
+    "If abstract, table, and figure values disagree, keep the table value and document the conflict in notes.",
+    "Keep simulation-only records only when notes explicitly mark them as theoretical.",
+    "Do not redistribute third-party supplemental datasets unless the source license allows it.",
+    "Record the originally reported unit first; unit normalization is deferred to the cleaning practice."
+  ],
+  "coverage_gaps": [
+    "Few negative or low-performance sensor examples are represented.",
+    "Humidity, temperature cross-sensitivity, and long-term stability are not consistently reported.",
+    "Biosensing coverage is limited compared with gas and refractive-index sensing.",
+    "No reliable open ML benchmark dataset was selected for direct ingestion during this practice."
+  ],
   "source_groups": {
     "scientific_papers": [
       {
-        "source_id": "paper_green_2018",
-        "name": "Green et al. 2018 – thrombin-binding DNA aptamer",
+        "source_id": "paper_wang_2022_uio66_pc",
+        "name": "Wang et al. 2022 - UiO-66 3D photonic crystal optical sensor for chlorobenzene vapor",
         "source_type": "journal_article",
-        "url": "https://doi.org/10.1021/example.2018",
-        "doi": "10.1021/example.2018",
+        "url": "https://pubs.rsc.org/en/content/articlehtml/2022/ra/d2ra05494a",
+        "doi": "10.1039/D2RA05494A",
+        "raw_file": "data/raw/pdf/rsc_2022_uio66_3d_photonic_crystal_optical_sensor.pdf",
         "access_status": "open_access",
-        "access_method": "publisher PDF download",
-        "access_date": "2026-01-15",
+        "access_method": "publisher HTML/PDF download",
+        "access_date": "2026-05-26",
+        "license": "RSC open-access article license; verify exact reuse terms before redistribution",
+        "expected_data_volume": "medium",
+        "estimated_records": 8,
+        "available_data_types": ["publisher_html", "pdf_text", "tables", "figures", "supplementary_information"],
+        "expected_fields": [
+          "material_name",
+          "material_formula",
+          "material_class",
+          "sensor_architecture",
+          "sensing_target",
+          "sensing_medium",
+          "measurement_type",
+          "measurement_value",
+          "measurement_unit",
+          "concentration_range",
+          "measurement_method"
+        ],
+        "extraction_strategy": {
+          "recommended_method": "publisher HTML plus manual PDF verification",
+          "target_content": "abstract, sensing-performance section, figures and any tables with sensitivity, LOD, quality factor, selectivity, response time, and recovery time"
+        },
+        "notes": "Primary source for UiO-66 MOF-based 3D photonic crystal chlorobenzene vapor sensing."
+      },
+      {
+        "source_id": "paper_nazeri_2020_hcpcf_mzi_gas",
+        "name": "Nazeri et al. 2020 - Hollow-core photonic crystal fiber Mach-Zehnder interferometer for gas sensing",
+        "source_type": "journal_article",
+        "url": "https://www.mdpi.com/1424-8220/20/10/2807",
+        "doi": "10.3390/s20102807",
+        "raw_file": "data/raw/pdf/nazeri_2020_hollow_core_pcf_mzi_gas_sensing.pdf",
+        "access_status": "open_access",
+        "access_method": "publisher HTML/PDF download",
+        "access_date": "2026-05-26",
+        "license": "CC-BY-4.0",
+        "expected_data_volume": "medium",
+        "estimated_records": 6,
+        "available_data_types": ["publisher_html", "pdf_text", "tables", "figures"],
+        "expected_fields": [
+          "material_name",
+          "material_class",
+          "sensor_architecture",
+          "sensing_target",
+          "refractive_index_range",
+          "measurement_type",
+          "measurement_value",
+          "measurement_unit",
+          "operating_wavelength_nm",
+          "measurement_method"
+        ],
+        "extraction_strategy": {
+          "recommended_method": "publisher HTML extraction for text values and manual verification against figures",
+          "target_content": "abstract, experimental results, cyclic gas detection plots, response/recovery-time discussion"
+        },
+        "notes": "Contains explicit RI sensitivity for the hollow-core PCF MZI sensor and multiple pure-gas measurements."
+      },
+      {
+        "source_id": "paper_dolci_2025_fiber_tip_pc_biosensing",
+        "name": "Dolci et al. 2025 - Fiber-tip photonic crystal for real-time referenced biosensing in serum",
+        "source_type": "journal_article",
+        "url": "https://doi.org/10.1016/j.biosx.2024.100573",
+        "doi": "10.1016/j.biosx.2024.100573",
+        "raw_file": "data/raw/pdf/fernandez_regules_2024_fiber_tip_photonic_crystal_biosensing.pdf",
+        "access_status": "open_access",
+        "access_method": "publisher or institutional repository PDF",
+        "access_date": "2026-05-26",
+        "license": "CC-BY",
+        "expected_data_volume": "medium",
+        "estimated_records": 5,
+        "available_data_types": ["pdf_text", "figures", "methods", "supplementary_information"],
+        "expected_fields": [
+          "material_name",
+          "material_class",
+          "sensor_architecture",
+          "sensing_target",
+          "sensing_medium",
+          "measurement_type",
+          "measurement_value",
+          "measurement_unit",
+          "measurement_method"
+        ],
+        "extraction_strategy": {
+          "recommended_method": "manual PDF extraction with figure and caption verification",
+          "target_content": "biosensing response curves, detection limit, serum measurements, referencing method"
+        },
+        "notes": "Recent biosensing source; useful to balance the dataset against gas-only sources."
+      },
+      {
+        "source_id": "paper_shaban_2017_plasmonic_1d_pc",
+        "name": "Shaban et al. 2017 - Tunability and sensing properties of plasmonic/1D photonic crystal",
+        "source_type": "journal_article",
+        "url": "https://www.nature.com/articles/srep41983",
+        "doi": "10.1038/srep41983",
+        "raw_file": "data/raw/pdf/shaban_2017_plasmonic_1d_photonic_crystal.pdf",
+        "access_status": "open_access",
+        "access_method": "publisher HTML/PDF download",
+        "access_date": "2026-05-26",
+        "license": "CC-BY-4.0",
+        "expected_data_volume": "medium",
+        "estimated_records": 6,
+        "available_data_types": ["publisher_html", "pdf_text", "figures", "supplementary_information"],
+        "expected_fields": [
+          "material_name",
+          "material_class",
+          "sensor_architecture",
+          "fabrication_method",
+          "sensing_target",
+          "measurement_type",
+          "measurement_value",
+          "measurement_unit",
+          "refractive_index_range",
+          "measurement_method"
+        ],
+        "extraction_strategy": {
+          "recommended_method": "manual PDF extraction and figure digitization only when plotted values are not tabulated",
+          "target_content": "SPR/PBG wavelength shifts, refractive-index response, glucose concentration response"
+        },
+        "notes": "Primary plasmonic/photonic hybrid source; includes chemical and glucose sensing examples."
+      },
+      {
+        "source_id": "paper_zaky_2020_tamm_1d_pc_gas",
+        "name": "Zaky et al. 2020 - Refractive index gas sensor based on the Tamm state in a one-dimensional photonic crystal",
+        "source_type": "journal_article",
+        "url": "https://www.nature.com/articles/s41598-020-66427-6",
+        "doi": "10.1038/s41598-020-66427-6",
+        "raw_file": "data/raw/pdf/zaky_2020_tamm_1d_photonic_crystal_gas_sensor.pdf",
+        "access_status": "open_access",
+        "access_method": "publisher HTML/PDF download",
+        "access_date": "2026-05-26",
         "license": "CC-BY-4.0",
         "expected_data_volume": "low",
-        "estimated_records": 8,
-        "available_data_types": ["tables", "text", "figures"],
-        "expected_fields": ["aptamer_sequence", "target_name", "Kd", "assay_method"],
+        "estimated_records": 4,
+        "available_data_types": ["publisher_html", "pdf_text", "figures"],
+        "expected_fields": [
+          "material_name",
+          "material_class",
+          "sensor_architecture",
+          "sensing_target",
+          "measurement_type",
+          "measurement_value",
+          "measurement_unit",
+          "refractive_index_range",
+          "measurement_method",
+          "notes"
+        ],
         "extraction_strategy": {
-          "recommended_method": "pdf_table_extraction plus manual verification"
+          "recommended_method": "manual extraction from abstract and optimization figures",
+          "target_content": "sensitivity, detection limit, theoretical optimization parameters"
         },
-        "notes": "Primary paper for thrombin aptamer benchmark measurements."
+        "notes": "Theoretical/simulation source; records must be clearly marked as theoretical if extracted."
       },
       {
-        "source_id": "paper_lee_2020",
-        "name": "Lee et al. 2020 – multiplex aptamer panel",
+        "source_id": "paper_lin_2018_seira_on_chip_gas",
+        "name": "Chong et al. 2018 - Surface-enhanced infrared absorption for on-chip gas sensing",
         "source_type": "journal_article",
-        "url": "https://doi.org/10.1038/example.2020",
-        "doi": "10.1038/example.2020",
-        "access_status": "subscription",
-        "access_method": "institutional library PDF",
-        "access_date": "2026-01-20",
-        "license": "publisher terms",
-        "expected_data_volume": "medium",
-        "estimated_records": 25,
-        "available_data_types": ["supplementary_tables"],
-        "expected_fields": ["aptamer_sequence", "target_name", "IC50", "buffer"],
-        "extraction_strategy": {
-          "recommended_method": "supplementary PDF table parsing"
-        },
-        "notes": "Use supplementary Table S3 for binding constants."
-      },
-      {
-        "source_id": "paper_kim_2015",
-        "name": "Kim et al. 2015 – lysozyme-binding aptamer",
-        "source_type": "journal_article",
-        "url": "https://doi.org/10.1016/example.2015",
-        "doi": "10.1016/example.2015",
-        "access_status": "open_access",
-        "access_method": "publisher PDF download",
-        "access_date": "2026-01-18",
-        "license": "CC-BY-NC-ND",
+        "url": "https://doi.org/10.1021/acssensors.7b00891",
+        "doi": "10.1021/acssensors.7b00891",
+        "raw_file": "data/raw/pdf/lin_2018_surface_enhanced_infrared_on_chip_gas_sensing.pdf",
+        "access_status": "publisher_landing_page_and_local_pdf",
+        "access_method": "DOI landing page and locally stored PDF",
+        "access_date": "2026-05-26",
+        "license": "ACS publisher terms; reuse not assumed",
         "expected_data_volume": "low",
-        "estimated_records": 6,
-        "available_data_types": ["tables", "text"],
-        "expected_fields": ["aptamer_sequence", "target_name", "Kd", "assay_method"],
+        "estimated_records": 4,
+        "available_data_types": ["pdf_text", "figures", "supporting_information"],
+        "expected_fields": [
+          "material_name",
+          "material_class",
+          "sensor_architecture",
+          "sensing_target",
+          "sensing_medium",
+          "measurement_type",
+          "measurement_value",
+          "measurement_unit",
+          "measurement_method"
+        ],
         "extraction_strategy": {
-          "recommended_method": "pdfplumber table extraction"
+          "recommended_method": "manual PDF extraction with license check before reusing supporting information",
+          "target_content": "gas detection metrics, SEIRA enhancement and on-chip sensing performance"
         },
-        "notes": "Benchmark lysozyme aptamer measurements."
+        "notes": "Use as a plasmonic/nanophotonic gas-sensing source; verify access and reuse terms before publishing derived tables."
+      },
+      {
+        "source_id": "review_wang_2022_mof_pc_gas",
+        "name": "Wang et al. 2022 - Metal-organic framework-based photonic crystal platforms for gas sensing: a review",
+        "source_type": "review_article",
+        "url": "https://pubs.rsc.org/en/content/articlehtml/2022/ma/d2ma00269h",
+        "doi": "10.1039/D2MA00269H",
+        "raw_file": "data/raw/pdf/wang_2022_mof_photonic_crystal_gas_sensing_review.pdf",
+        "access_status": "open_access",
+        "access_method": "publisher HTML/PDF download",
+        "access_date": "2026-05-26",
+        "license": "RSC open-access article license; verify exact reuse terms before redistribution",
+        "expected_data_volume": "medium_secondary",
+        "estimated_records": 0,
+        "available_data_types": ["review_tables", "figures", "references"],
+        "expected_fields": ["source_id", "source_url", "doi", "notes"],
+        "extraction_strategy": {
+          "recommended_method": "snowballing only unless primary source is inaccessible",
+          "target_content": "reference list and summary tables for MOF-photonic crystal gas sensors"
+        },
+        "notes": "Use primarily to identify primary articles and compare terminology; do not prefer review values over primary papers."
+      },
+      {
+        "source_id": "review_yu_2020_hcpcf_gas",
+        "name": "Yu et al. 2020 - Hollow-core photonic crystal fiber gas sensing",
+        "source_type": "review_article",
+        "url": "https://www.mdpi.com/1424-8220/20/10/2996",
+        "doi": "10.3390/s20102996",
+        "raw_file": "data/raw/pdf/yu_2020_hollow_core_pcf_gas_sensing_review.pdf",
+        "access_status": "open_access",
+        "access_method": "publisher HTML/PDF download",
+        "access_date": "2026-05-26",
+        "license": "CC-BY-4.0",
+        "expected_data_volume": "medium_secondary",
+        "estimated_records": 0,
+        "available_data_types": ["review_tables", "figures", "references"],
+        "expected_fields": ["source_id", "source_url", "doi", "notes"],
+        "extraction_strategy": {
+          "recommended_method": "snowballing and terminology harmonization",
+          "target_content": "HC-PCF gas-sensing principles, target gases, performance ranges"
+        },
+        "notes": "Use for finding additional HC-PCF primary studies and controlled vocabulary."
+      },
+      {
+        "source_id": "review_dantl_2022_1d_pc_sensors",
+        "name": "Dantl et al. 2022 - Stimuli-responsive one-dimensional photonic crystals: design, fabrication and sensing",
+        "source_type": "review_article",
+        "url": "https://pubs.rsc.org/en/content/articlehtml/2022/ma/d2ma00793b",
+        "doi": "10.1039/D2MA00793B",
+        "raw_file": "data/raw/pdf/dantl_2022_stimuli_responsive_1d_photonic_crystals.pdf",
+        "access_status": "open_access",
+        "access_method": "publisher HTML/PDF download",
+        "access_date": "2026-05-26",
+        "license": "RSC open-access article license; verify exact reuse terms before redistribution",
+        "expected_data_volume": "medium_secondary",
+        "estimated_records": 0,
+        "available_data_types": ["review_text", "figures", "references"],
+        "expected_fields": ["source_id", "source_url", "doi", "notes"],
+        "extraction_strategy": {
+          "recommended_method": "snowballing and fabrication-method vocabulary extraction",
+          "target_content": "1D photonic crystal sensor classes and stimuli-response mechanisms"
+        },
+        "notes": "Review source for 1D photonic crystal sensing mechanisms and fabrication terms."
+      },
+      {
+        "source_id": "review_chiappini_2020_chromatic_pc",
+        "name": "Chiappini et al. 2020 - Photonic crystal stimuli-responsive chromatic sensors: a short review",
+        "source_type": "review_article",
+        "url": "https://www.mdpi.com/2072-666X/11/3/290",
+        "doi": "10.3390/mi11030290",
+        "raw_file": "data/raw/pdf/lopez_2020_photonic_crystal_chromatic_sensors_review.pdf",
+        "access_status": "open_access",
+        "access_method": "publisher HTML/PDF download",
+        "access_date": "2026-05-26",
+        "license": "CC-BY-4.0",
+        "expected_data_volume": "low_secondary",
+        "estimated_records": 0,
+        "available_data_types": ["review_text", "figures", "references"],
+        "expected_fields": ["source_id", "source_url", "doi", "notes"],
+        "extraction_strategy": {
+          "recommended_method": "snowballing for chromatic photonic crystal sensor examples",
+          "target_content": "chromatic readout, stimuli classes, references to primary articles"
+        },
+        "notes": "Use as a source-discovery review for chromatic sensor examples."
       }
     ],
     "supplementary_materials": [
       {
-        "source_id": "supp_lee_2020_s3",
-        "name": "Lee 2020 Supplementary Table S3",
-        "source_type": "supplementary_data",
-        "url": "https://doi.org/10.1038/example.2020#supplementary",
-        "doi": "10.1038/example.2020",
+        "source_id": "supp_wang_2022_uio66_pc_esi",
+        "name": "Supplementary information for Wang et al. 2022 UiO-66 3D photonic crystal sensor",
+        "source_type": "supplementary_information",
+        "url": "https://pubs.rsc.org/en/content/articlelanding/2022/ra/d2ra05494a#supplementary-information",
+        "doi": "10.1039/D2RA05494A",
+        "raw_file": "",
         "access_status": "open_access",
-        "access_method": "supplementary PDF",
-        "access_date": "2026-01-21",
-        "license": "CC-BY-4.0",
-        "expected_data_volume": "medium",
-        "estimated_records": 20,
-        "available_data_types": ["tables"],
-        "expected_fields": ["aptamer_sequence", "measurement_value", "measurement_unit"],
+        "access_method": "publisher supplementary-information link",
+        "access_date": "2026-05-26",
+        "license": "same as article or publisher supplementary terms; verify before redistribution",
+        "expected_data_volume": "low",
+        "estimated_records": 4,
+        "available_data_types": ["supplementary_pdf", "figures", "instrument_details"],
+        "expected_fields": ["fabrication_method", "measurement_method", "concentration_range", "notes"],
         "extraction_strategy": {
-          "recommended_method": "Camelot or tabula on supplementary PDF"
+          "recommended_method": "download supplementary PDF, then manual table/figure check"
         },
-        "notes": "Machine-readable tables; preferred over main-text figure values."
+        "notes": "Expected to support fabrication and measurement-context fields for UiO-66 records."
+      },
+      {
+        "source_id": "supp_shaban_2017_plasmonic_1d_pc",
+        "name": "Supplementary information for Shaban et al. 2017 plasmonic/1D photonic crystal",
+        "source_type": "supplementary_information",
+        "url": "https://www.nature.com/articles/srep41983#Sec17",
+        "doi": "10.1038/srep41983",
+        "raw_file": "",
+        "access_status": "open_access",
+        "access_method": "publisher supplementary-material link",
+        "access_date": "2026-05-26",
+        "license": "article-specific supplementary terms",
+        "expected_data_volume": "low",
+        "estimated_records": 2,
+        "available_data_types": ["supplementary_pdf", "figures"],
+        "expected_fields": ["fabrication_method", "wavelength_shift_nm", "notes"],
+        "extraction_strategy": {
+          "recommended_method": "manual supplementary PDF review"
+        },
+        "notes": "Use to confirm optical spectra and fabrication conditions when main-text figures are ambiguous."
+      },
+      {
+        "source_id": "supp_lin_2018_seira_on_chip_gas",
+        "name": "Supporting information for Chong et al. 2018 SEIRA on-chip gas sensing",
+        "source_type": "supporting_information",
+        "url": "https://doi.org/10.1021/acssensors.7b00891.s001",
+        "doi": "10.1021/acssensors.7b00891",
+        "raw_file": "",
+        "access_status": "publisher_terms",
+        "access_method": "ACS supporting-information link",
+        "access_date": "2026-05-26",
+        "license": "ACS publisher terms; reuse not assumed",
+        "expected_data_volume": "low",
+        "estimated_records": 2,
+        "available_data_types": ["supporting_pdf", "methods", "figures"],
+        "expected_fields": ["fabrication_method", "measurement_method", "notes"],
+        "extraction_strategy": {
+          "recommended_method": "manual review after confirming access and reuse permissions"
+        },
+        "notes": "Useful for device-fabrication and gas-exposure details."
       }
     ],
     "databases": [
       {
-        "source_id": "db_aptagen",
-        "name": "AptaIndex / literature-curated aptamer entries",
-        "source_type": "database",
-        "url": "https://example.org/aptamer-db",
+        "source_id": "db_pubchem_analytes",
+        "name": "PubChem compound records for analytes and solvents",
+        "source_type": "chemical_database",
+        "url": "https://pubchem.ncbi.nlm.nih.gov/",
         "doi": "",
+        "raw_file": "",
         "access_status": "open_access",
-        "access_method": "web export and API (if available)",
-        "access_date": "2026-02-01",
-        "license": "CC-BY-4.0",
-        "expected_data_volume": "high",
-        "estimated_records": 200,
-        "available_data_types": ["structured_records", "sequences"],
-        "expected_fields": ["aptamer_sequence", "target_name", "Kd"],
+        "access_method": "PUG-REST API or web lookup",
+        "access_date": "2026-05-26",
+        "license": "NIH/NLM open data terms; verify per downloaded record",
+        "expected_data_volume": "metadata_only",
+        "estimated_records": 0,
+        "available_data_types": ["compound_identifiers", "formulae", "synonyms"],
+        "expected_fields": ["sensing_target", "material_formula", "notes"],
         "extraction_strategy": {
-          "recommended_method": "web_scrape or bulk CSV download"
+          "recommended_method": "API lookup for standardized analyte names and formulae only"
         },
-        "notes": "Cross-check sequences against primary papers when possible."
+        "notes": "Does not provide sensor-performance values; use only for chemical-name normalization."
+      },
+      {
+        "source_id": "db_pmc_open_access",
+        "name": "PubMed Central open-access full-text records",
+        "source_type": "full_text_database",
+        "url": "https://pmc.ncbi.nlm.nih.gov/",
+        "doi": "",
+        "raw_file": "",
+        "access_status": "open_access_with_article_specific_licenses",
+        "access_method": "PMC article page and PDF where available",
+        "access_date": "2026-05-26",
+        "license": "article-specific open-access license",
+        "expected_data_volume": "metadata_and_fulltext",
+        "estimated_records": 0,
+        "available_data_types": ["full_text", "figures", "supplementary_links"],
+        "expected_fields": ["source_url", "doi", "notes"],
+        "extraction_strategy": {
+          "recommended_method": "use as a fallback full-text mirror for open biomedical/nanophotonic papers"
+        },
+        "notes": "Use only when publisher HTML is unavailable or to cross-check open-access status."
       }
     ],
     "aggregators": [
       {
-        "source_id": "agg_uniprot_crossref",
-        "name": "UniProt + Crossref metadata for target proteins",
-        "source_type": "aggregator",
-        "url": "https://www.uniprot.org/",
+        "source_id": "agg_crossref_metadata",
+        "name": "Crossref DOI metadata",
+        "source_type": "metadata_aggregator",
+        "url": "https://api.crossref.org/",
         "doi": "",
+        "raw_file": "",
         "access_status": "open_access",
         "access_method": "REST API",
-        "access_date": "2026-02-05",
-        "license": "CC-BY-4.0",
+        "access_date": "2026-05-26",
+        "license": "metadata license depends on Crossref member deposits",
         "expected_data_volume": "metadata_only",
         "estimated_records": 0,
-        "available_data_types": ["protein_names", "identifiers"],
-        "expected_fields": ["target_name", "target_type"],
+        "available_data_types": ["titles", "authors", "publication_dates", "DOIs", "publisher_links"],
+        "expected_fields": ["source_url", "doi", "source_type", "notes"],
         "extraction_strategy": {
-          "recommended_method": "API lookup to standardize target names"
+          "recommended_method": "DOI metadata validation only"
         },
-        "notes": "Does not provide binding values; enriches target metadata only."
-      }
-    ],
-    "github_repositories": [
+        "notes": "Use to validate bibliographic metadata; not a source of measurement values."
+      },
       {
-        "source_id": "gh_aptamer_benchmark",
-        "name": "community/aptamer-binding-benchmark",
-        "source_type": "github_repository",
-        "url": "https://github.com/example/aptamer-binding-benchmark",
+        "source_id": "agg_openalex_metadata",
+        "name": "OpenAlex scholarly metadata",
+        "source_type": "metadata_aggregator",
+        "url": "https://openalex.org/",
         "doi": "",
+        "raw_file": "",
         "access_status": "open_access",
-        "access_method": "git clone",
-        "access_date": "2026-02-10",
-        "license": "MIT",
-        "expected_data_volume": "medium",
-        "estimated_records": 50,
-        "available_data_types": ["csv", "json"],
-        "expected_fields": ["aptamer_sequence", "target_name", "measurement_value"],
+        "access_method": "REST API or web lookup",
+        "access_date": "2026-05-26",
+        "license": "CC0 metadata",
+        "expected_data_volume": "metadata_only",
+        "estimated_records": 0,
+        "available_data_types": ["works", "references", "concepts", "open_access_status"],
+        "expected_fields": ["source_url", "doi", "notes"],
         "extraction_strategy": {
-          "recommended_method": "import released CSV with license check"
+          "recommended_method": "reference snowballing and open-access status check"
         },
-        "notes": "Verify commit hash and release tag for reproducibility."
+        "notes": "Use for discovery and metadata enrichment, not for extracting sensor metrics."
+      },
+      {
+        "source_id": "agg_semantic_scholar_metadata",
+        "name": "Semantic Scholar paper metadata",
+        "source_type": "metadata_aggregator",
+        "url": "https://www.semanticscholar.org/",
+        "doi": "",
+        "raw_file": "",
+        "access_status": "open_access",
+        "access_method": "web lookup or API subject to rate limits",
+        "access_date": "2026-05-26",
+        "license": "metadata terms of use",
+        "expected_data_volume": "metadata_only",
+        "estimated_records": 0,
+        "available_data_types": ["abstracts", "citations", "references"],
+        "expected_fields": ["source_url", "doi", "notes"],
+        "extraction_strategy": {
+          "recommended_method": "citation snowballing only"
+        },
+        "notes": "Useful for finding related primary papers after the initial source set."
       }
     ],
-    "ml_datasets": [
-      {
-        "source_id": "ml_aptamer_kaggle",
-        "name": "Kaggle – Aptamer affinity prediction subset",
-        "source_type": "ml_dataset",
-        "url": "https://www.kaggle.com/datasets/example/aptamer-affinity",
-        "doi": "",
-        "access_status": "registration_required",
-        "access_method": "Kaggle API download",
-        "access_date": "2026-02-12",
-        "license": "unknown",
-        "expected_data_volume": "high",
-        "estimated_records": 500,
-        "available_data_types": ["csv"],
-        "expected_fields": ["aptamer_sequence", "target_name", "label"],
-        "extraction_strategy": {
-          "recommended_method": "document provenance; use only if license permits redistribution"
-        },
-        "notes": "May mix predicted and experimental values—filter by source column."
-      }
-    ]
+    "github_repositories": [],
+    "ml_datasets": []
   }
 }
