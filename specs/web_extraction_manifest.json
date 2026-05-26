@@ -1,55 +1,316 @@
 {
-  "web_extraction_version": "0.1.0",
+  "web_extraction_version": "0.2.0",
+  "web_extraction_process": "Extract schema-aligned photonic-material optical-sensing records from selected article HTML pages.",
+  "record_schema": "specs/dataset_schema.json",
   "output_records_file": "data/extracted/web_extracted_records.csv",
   "script": "scripts/extract_web.py",
+  "extraction_date": "2026-05-26",
+  "methods": {
+    "snapshot_download": "Publisher article HTML or an open PMC full-text HTML mirror is downloaded to data/raw/web/ with urllib.request and a descriptive user agent.",
+    "html_verification": "Each page has validation terms that should appear in the downloaded HTML snapshot; missing terms are logged without blocking curated extraction.",
+    "record_extraction": "Numeric scalar records are manually verified from HTML text, article tables, or figure text and stored in this manifest using the project schema.",
+    "deduplication_policy": "Practice 4 adds measurements not already exported by the PDF extraction where possible. Existing PDF records remain the authority when the same record_id appears in both extracts."
+  },
   "input_pages": [
     {
-      "source_id": "db_aptagen",
-      "page_id": "aptagen_thrombin_entries",
-      "url": "https://example.org/aptamer-db/target/thrombin",
-      "access_date": "2026-02-01",
+      "source_id": "paper_wang_2022_uio66_pc",
+      "page_id": "rsc_wang_2022_uio66_pc_html",
+      "url": "https://pubs.rsc.org/en/content/articlehtml/2022/ra/d2ra05494a",
+      "doi": "10.1039/D2RA05494A",
+      "access_date": "2026-05-26",
       "access_status": "open_access",
-      "robots_notes": "robots.txt allows crawling of /aptamer-db/ with 1 req/s; respect terms of use.",
-      "selection_reason": "Structured HTML tables listing curated thrombin aptamer Kd values.",
-      "page_type": "database_browse_page",
-      "expected_content": "HTML table with columns: sequence, target, Kd, method",
+      "robots_notes": "Publisher HTML page was accessed once for a course extraction snapshot; no pagination or bulk crawl was used.",
+      "selection_reason": "Priority source from Practice 2 with HTML text containing the concentration-response series for UiO-66 photonic crystal chlorobenzene sensing.",
+      "page_type": "publisher_article_html",
+      "expected_content": "Abstract, article body, figures, captions, and response values for the UiO-66 3D photonic crystal vapor sensor.",
       "parser_plan": {
-        "tool": "requests + BeautifulSoup",
-        "selectors": {
-          "table": "table.binding-records",
-          "row": "tbody tr",
-          "sequence": "td.seq",
-          "target": "td.target",
-          "value": "td.kd",
-          "unit": "td.unit"
+        "tool": "urllib.request plus curated HTML text/table review",
+        "anchors": ["sensitivity", "limit of detection", "chlorobenzene", "Fig. 5"],
+        "record_mapping": {
+          "measurement_type": "wavelength_shift",
+          "measurement_value": "reported spectral shift in nm",
+          "measurement_unit": "nm",
+          "notes": "chlorobenzene concentration is preserved in notes"
         }
       },
-      "raw_snapshot_path": "data/raw/web/aptagen_thrombin_entries.html",
-      "extraction_status": "template_pending"
+      "validation_terms": ["0.06063", "1.64 ppm", "chlorobenzene"],
+      "raw_snapshot_path": "data/raw/web/rsc_wang_2022_uio66_pc.html",
+      "extraction_status": "completed",
+      "records": [
+        {
+          "record_id": "rec_wang_2022_uio66_shift_80ppm_web_001",
+          "material_name": "UiO-66 3D photonic crystal",
+          "material_class": "MOF-based photonic crystal",
+          "sensor_architecture": "3D photonic crystal vapor sensor",
+          "sensing_target": "chlorobenzene vapor",
+          "measurement_type": "wavelength_shift",
+          "measurement_value": 6.88,
+          "measurement_unit": "nm",
+          "source_id": "paper_wang_2022_uio66_pc",
+          "source_url": "https://pubs.rsc.org/en/content/articlehtml/2022/ra/d2ra05494a",
+          "doi": "10.1039/D2RA05494A",
+          "raw_file": "data/raw/web/rsc_wang_2022_uio66_pc.html",
+          "extraction_confidence": "high",
+          "notes": "Publisher HTML concentration-response text; spectral shift at 80 ppm chlorobenzene vapor."
+        },
+        {
+          "record_id": "rec_wang_2022_uio66_shift_160ppm_web_001",
+          "material_name": "UiO-66 3D photonic crystal",
+          "material_class": "MOF-based photonic crystal",
+          "sensor_architecture": "3D photonic crystal vapor sensor",
+          "sensing_target": "chlorobenzene vapor",
+          "measurement_type": "wavelength_shift",
+          "measurement_value": 13.04,
+          "measurement_unit": "nm",
+          "source_id": "paper_wang_2022_uio66_pc",
+          "source_url": "https://pubs.rsc.org/en/content/articlehtml/2022/ra/d2ra05494a",
+          "doi": "10.1039/D2RA05494A",
+          "raw_file": "data/raw/web/rsc_wang_2022_uio66_pc.html",
+          "extraction_confidence": "high",
+          "notes": "Publisher HTML concentration-response text; spectral shift at 160 ppm chlorobenzene vapor."
+        },
+        {
+          "record_id": "rec_wang_2022_uio66_shift_240ppm_web_001",
+          "material_name": "UiO-66 3D photonic crystal",
+          "material_class": "MOF-based photonic crystal",
+          "sensor_architecture": "3D photonic crystal vapor sensor",
+          "sensing_target": "chlorobenzene vapor",
+          "measurement_type": "wavelength_shift",
+          "measurement_value": 17.78,
+          "measurement_unit": "nm",
+          "source_id": "paper_wang_2022_uio66_pc",
+          "source_url": "https://pubs.rsc.org/en/content/articlehtml/2022/ra/d2ra05494a",
+          "doi": "10.1039/D2RA05494A",
+          "raw_file": "data/raw/web/rsc_wang_2022_uio66_pc.html",
+          "extraction_confidence": "high",
+          "notes": "Publisher HTML concentration-response text; spectral shift at 240 ppm chlorobenzene vapor."
+        },
+        {
+          "record_id": "rec_wang_2022_uio66_shift_320ppm_web_001",
+          "material_name": "UiO-66 3D photonic crystal",
+          "material_class": "MOF-based photonic crystal",
+          "sensor_architecture": "3D photonic crystal vapor sensor",
+          "sensing_target": "chlorobenzene vapor",
+          "measurement_type": "wavelength_shift",
+          "measurement_value": 22.53,
+          "measurement_unit": "nm",
+          "source_id": "paper_wang_2022_uio66_pc",
+          "source_url": "https://pubs.rsc.org/en/content/articlehtml/2022/ra/d2ra05494a",
+          "doi": "10.1039/D2RA05494A",
+          "raw_file": "data/raw/web/rsc_wang_2022_uio66_pc.html",
+          "extraction_confidence": "high",
+          "notes": "Publisher HTML concentration-response text; spectral shift at 320 ppm chlorobenzene vapor."
+        },
+        {
+          "record_id": "rec_wang_2022_uio66_shift_400ppm_web_001",
+          "material_name": "UiO-66 3D photonic crystal",
+          "material_class": "MOF-based photonic crystal",
+          "sensor_architecture": "3D photonic crystal vapor sensor",
+          "sensing_target": "chlorobenzene vapor",
+          "measurement_type": "wavelength_shift",
+          "measurement_value": 26.08,
+          "measurement_unit": "nm",
+          "source_id": "paper_wang_2022_uio66_pc",
+          "source_url": "https://pubs.rsc.org/en/content/articlehtml/2022/ra/d2ra05494a",
+          "doi": "10.1039/D2RA05494A",
+          "raw_file": "data/raw/web/rsc_wang_2022_uio66_pc.html",
+          "extraction_confidence": "high",
+          "notes": "Publisher HTML concentration-response text; spectral shift at 400 ppm chlorobenzene vapor."
+        }
+      ]
     },
     {
-      "source_id": "db_aptagen",
-      "page_id": "aptagen_lysozyme_entries",
-      "url": "https://example.org/aptamer-db/target/lysozyme",
-      "access_date": "2026-02-02",
+      "source_id": "paper_nazeri_2020_hcpcf_mzi_gas",
+      "page_id": "pmc_nazeri_2020_hcpcf_mzi_html",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7284782/",
+      "doi": "10.3390/s20102807",
+      "access_date": "2026-05-26",
       "access_status": "open_access",
-      "robots_notes": "Same policy as thrombin browse page.",
-      "selection_reason": "Complements PDF sources for lysozyme aptamer records.",
-      "page_type": "database_browse_page",
-      "expected_content": "Paginated result list with affinity fields",
+      "robots_notes": "Open PMC full-text HTML mirror was accessed once because the publisher page may block simple script requests; no supplemental bulk download was performed.",
+      "selection_reason": "Priority HC-PCF source from Practice 2 with HTML tables for gas spectral shifts and refractive-index sensitivity.",
+      "page_type": "pmc_full_text_html",
+      "expected_content": "Article body, tables, and figures for hollow-core photonic crystal fiber Mach-Zehnder gas sensing.",
       "parser_plan": {
-        "tool": "requests + BeautifulSoup",
-        "selectors": {
-          "table": "table.binding-records",
-          "row": "tbody tr",
-          "sequence": "td.seq",
-          "target": "td.target",
-          "value": "td.kd",
-          "unit": "td.unit"
+        "tool": "urllib.request plus curated HTML table review",
+        "anchors": ["Table 1", "Sensor C", "Spectral shift", "4629"],
+        "record_mapping": {
+          "measurement_type": "wavelength_shift",
+          "measurement_value": "Table 1 spectral shift for selected gases",
+          "measurement_unit": "pm",
+          "notes": "gas identity and sensor length are preserved in notes"
         }
       },
-      "raw_snapshot_path": "data/raw/web/aptagen_lysozyme_entries.html",
-      "extraction_status": "template_pending"
+      "validation_terms": ["4629", "Methane", "Argon"],
+      "raw_snapshot_path": "data/raw/web/pmc_nazeri_2020_hcpcf_mzi.html",
+      "extraction_status": "completed",
+      "records": [
+        {
+          "record_id": "rec_nazeri_2020_hcpcf_sensor_c_helium_shift_web_001",
+          "material_name": "hollow-core photonic crystal fiber",
+          "material_class": "photonic crystal fiber",
+          "sensor_architecture": "HC-PCF Mach-Zehnder interferometer sensor C, 3.30 mm HC-PCF length",
+          "sensing_target": "helium gas",
+          "measurement_type": "wavelength_shift",
+          "measurement_value": 1300,
+          "measurement_unit": "pm",
+          "source_id": "paper_nazeri_2020_hcpcf_mzi_gas",
+          "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7284782/",
+          "doi": "10.3390/s20102807",
+          "raw_file": "data/raw/web/pmc_nazeri_2020_hcpcf_mzi.html",
+          "extraction_confidence": "high",
+          "notes": "PMC HTML Table 1; spectral shift for sensor C relative to nitrogen exposure."
+        },
+        {
+          "record_id": "rec_nazeri_2020_hcpcf_sensor_c_methane_shift_web_001",
+          "material_name": "hollow-core photonic crystal fiber",
+          "material_class": "photonic crystal fiber",
+          "sensor_architecture": "HC-PCF Mach-Zehnder interferometer sensor C, 3.30 mm HC-PCF length",
+          "sensing_target": "methane gas",
+          "measurement_type": "wavelength_shift",
+          "measurement_value": -618,
+          "measurement_unit": "pm",
+          "source_id": "paper_nazeri_2020_hcpcf_mzi_gas",
+          "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7284782/",
+          "doi": "10.3390/s20102807",
+          "raw_file": "data/raw/web/pmc_nazeri_2020_hcpcf_mzi.html",
+          "extraction_confidence": "high",
+          "notes": "PMC HTML Table 1; negative spectral shift for sensor C relative to nitrogen exposure."
+        },
+        {
+          "record_id": "rec_nazeri_2020_hcpcf_sensor_c_argon_shift_web_001",
+          "material_name": "hollow-core photonic crystal fiber",
+          "material_class": "photonic crystal fiber",
+          "sensor_architecture": "HC-PCF Mach-Zehnder interferometer sensor C, 3.30 mm HC-PCF length",
+          "sensing_target": "argon gas",
+          "measurement_type": "wavelength_shift",
+          "measurement_value": 100,
+          "measurement_unit": "pm",
+          "source_id": "paper_nazeri_2020_hcpcf_mzi_gas",
+          "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7284782/",
+          "doi": "10.3390/s20102807",
+          "raw_file": "data/raw/web/pmc_nazeri_2020_hcpcf_mzi.html",
+          "extraction_confidence": "high",
+          "notes": "PMC HTML Table 1; positive argon spectral shift for sensor C relative to nitrogen exposure."
+        }
+      ]
+    },
+    {
+      "source_id": "paper_shaban_2017_plasmonic_1d_pc",
+      "page_id": "pmc_shaban_2017_plasmonic_1d_pc_html",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5296759/",
+      "doi": "10.1038/srep41983",
+      "access_date": "2026-05-26",
+      "access_status": "open_access",
+      "robots_notes": "Open PMC full-text HTML mirror was accessed once because the publisher page may return a client challenge to script requests.",
+      "selection_reason": "Priority plasmonic/photonic hybrid source with HTML article text reporting separate sensitivity values for resonance and photonic-bandgap edges.",
+      "page_type": "pmc_full_text_html",
+      "expected_content": "Open-access full-text HTML with tables, captions, and sensitivity values for the Au/1D photonic crystal sensor.",
+      "parser_plan": {
+        "tool": "urllib.request plus curated HTML text/table review",
+        "anchors": ["48.56", "46.73", "56.14", "nm/RIU"],
+        "record_mapping": {
+          "measurement_type": "sensitivity",
+          "measurement_value": "reported slope in nm/RIU",
+          "measurement_unit": "nm/RIU",
+          "notes": "resonance or bandgap-edge label is preserved in notes"
+        }
+      },
+      "validation_terms": ["48.56", "46.73", "56.14"],
+      "raw_snapshot_path": "data/raw/web/pmc_shaban_2017_plasmonic_1d_pc.html",
+      "extraction_status": "completed",
+      "records": [
+        {
+          "record_id": "rec_shaban_2017_au_1dpc_spr_res_sensitivity_web_001",
+          "material_name": "Au/1D photonic crystal",
+          "material_class": "plasmonic/photonic hybrid",
+          "sensor_architecture": "gold-coated one-dimensional photonic crystal microfluidic sensor",
+          "sensing_target": "environmental refractive index",
+          "measurement_type": "sensitivity",
+          "measurement_value": 48.56,
+          "measurement_unit": "nm/RIU",
+          "source_id": "paper_shaban_2017_plasmonic_1d_pc",
+          "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5296759/",
+          "doi": "10.1038/srep41983",
+          "raw_file": "data/raw/web/pmc_shaban_2017_plasmonic_1d_pc.html",
+          "extraction_confidence": "high",
+          "notes": "PMC HTML sensitivity for the surface-plasmon-resonance wavelength lambda_res."
+        },
+        {
+          "record_id": "rec_shaban_2017_au_1dpc_left_edge_sensitivity_web_001",
+          "material_name": "Au/1D photonic crystal",
+          "material_class": "plasmonic/photonic hybrid",
+          "sensor_architecture": "gold-coated one-dimensional photonic crystal microfluidic sensor",
+          "sensing_target": "environmental refractive index",
+          "measurement_type": "sensitivity",
+          "measurement_value": 46.73,
+          "measurement_unit": "nm/RIU",
+          "source_id": "paper_shaban_2017_plasmonic_1d_pc",
+          "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5296759/",
+          "doi": "10.1038/srep41983",
+          "raw_file": "data/raw/web/pmc_shaban_2017_plasmonic_1d_pc.html",
+          "extraction_confidence": "high",
+          "notes": "PMC HTML sensitivity for the left photonic-bandgap edge lambda_L."
+        }
+      ]
+    },
+    {
+      "source_id": "paper_zaky_2020_tamm_1d_pc_gas",
+      "page_id": "pmc_zaky_2020_tamm_1d_pc_html",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7297992/",
+      "doi": "10.1038/s41598-020-66427-6",
+      "access_date": "2026-05-26",
+      "access_status": "open_access",
+      "robots_notes": "Open PMC full-text HTML mirror was accessed once because the publisher page may return a client challenge to script requests; theoretical records are marked in notes.",
+      "selection_reason": "Theoretical 1D photonic crystal source with HTML text reporting intermediate sensitivity values before final optimization.",
+      "page_type": "pmc_full_text_html",
+      "expected_content": "Open-access full-text HTML with equations, optimization discussion, and Tamm-state gas-sensor sensitivity values.",
+      "parser_plan": {
+        "tool": "urllib.request plus curated HTML text review",
+        "anchors": ["2600", "3100", "1.9", "nm/RIU"],
+        "record_mapping": {
+          "measurement_type": "sensitivity",
+          "measurement_value": "reported theoretical sensitivity in nm/RIU",
+          "measurement_unit": "nm/RIU",
+          "notes": "simulation condition is preserved in notes"
+        }
+      },
+      "validation_terms": ["2600", "3100", "nm/RIU"],
+      "raw_snapshot_path": "data/raw/web/pmc_zaky_2020_tamm_1d_pc.html",
+      "extraction_status": "completed",
+      "records": [
+        {
+          "record_id": "rec_zaky_2020_tamm_baseline_sensitivity_web_001",
+          "material_name": "Tamm-state 1D photonic crystal",
+          "material_class": "1D photonic crystal",
+          "sensor_architecture": "prism-coupled Tamm-state one-dimensional photonic crystal gas sensor",
+          "sensing_target": "gas refractive index",
+          "measurement_type": "sensitivity",
+          "measurement_value": 2600,
+          "measurement_unit": "nm/RIU",
+          "source_id": "paper_zaky_2020_tamm_1d_pc_gas",
+          "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7297992/",
+          "doi": "10.1038/s41598-020-66427-6",
+          "raw_file": "data/raw/web/pmc_zaky_2020_tamm_1d_pc.html",
+          "extraction_confidence": "high",
+          "notes": "PMC HTML; theoretical non-optimized example at normal incidence with d_gas=4000 nm, d_m=30 nm, and N=8."
+        },
+        {
+          "record_id": "rec_zaky_2020_tamm_gas_layer_sensitivity_web_001",
+          "material_name": "Tamm-state 1D photonic crystal",
+          "material_class": "1D photonic crystal",
+          "sensor_architecture": "prism-coupled Tamm-state one-dimensional photonic crystal gas sensor",
+          "sensing_target": "gas refractive index",
+          "measurement_type": "sensitivity",
+          "measurement_value": 3100,
+          "measurement_unit": "nm/RIU",
+          "source_id": "paper_zaky_2020_tamm_1d_pc_gas",
+          "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7297992/",
+          "doi": "10.1038/s41598-020-66427-6",
+          "raw_file": "data/raw/web/pmc_zaky_2020_tamm_1d_pc.html",
+          "extraction_confidence": "high",
+          "notes": "PMC HTML; theoretical sensitivity after increasing the gas-layer thickness to 10000 nm before later global optimization."
+        }
+      ]
     }
   ]
 }
