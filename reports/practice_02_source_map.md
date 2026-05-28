@@ -40,12 +40,17 @@ Supplementary information is included only when it can clarify fabrication, meas
 
 ### Databases
 
-Two databases are listed as metadata support sources, not as primary sources of sensor-performance values:
+Databases are used in two roles: (1) external comparison sources with overlapping sensor/material fields, and (2) metadata support sources for analyte and article normalization. The three best database matches found after inspecting the final dataset are listed first.
 
-| source_id | Use |
-|-----------|-----|
-| `db_pubchem_analytes` | Standardize analyte names, synonyms, and formulae |
-| `db_pmc_open_access` | Cross-check open-access full text and article-specific licenses |
+| source_id | Database | Main overlap with this dataset | Use |
+|-----------|----------|--------------------------------|-----|
+| `db_mof_sers_zenodo` | MOF-based SERS substrates dataset, Zenodo | MOF/substrate, plasmonic metal, analyte, analyte phase, LOD, linear range, DOI | Best external comparison source for MOF/plasmonic sensing records; use for validation, not automatic replacement |
+| `db_opticalmaterials` | OpticalMaterials.org refractive-index and dielectric-constant databases | Material/compound, optical property type, refractive index, dielectric constant, wavelength, DOI | Check optical-property plausibility and add context for refractive-index-sensitive records |
+| `db_refractiveindex_info` | RefractiveIndex.INFO optical constants database | Material name, refractive index `n`, extinction coefficient `k`, wavelength range, source reference | Validate optical constants for photonic layers, plasmonic metals, and sensing media |
+| `db_pubchem_analytes` | PubChem compound records | Analyte names, synonyms, formulae, identifiers | Standardize chemical names for gas, vapor, solvent, and biomolecular targets |
+| `db_pmc_open_access` | PubMed Central open-access full text | DOI, article text, figures, supplementary links | Cross-check open-access full text and article-specific licenses |
+
+The MOF-based SERS dataset is the closest field-level match because it combines `material/substrate`, `sensing_target`, `measurement_type`-like performance values, and DOI provenance. OpticalMaterials.org and RefractiveIndex.INFO do not report sensor performance, but they are useful for validating optical context, especially records expressed in `nm/RIU`, `RIU`, and wavelength-shift units.
 
 ### Aggregators
 

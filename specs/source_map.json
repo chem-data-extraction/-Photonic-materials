@@ -430,6 +430,113 @@
     ],
     "databases": [
       {
+        "source_id": "db_mof_sers_zenodo",
+        "name": "MOF-based SERS substrates dataset",
+        "source_type": "curated_sensor_performance_database",
+        "url": "https://zenodo.org/doi/10.5281/zenodo.10580928",
+        "doi": "10.5281/zenodo.10580928",
+        "raw_file": "",
+        "access_status": "open_access",
+        "access_method": "Zenodo CSV/XLSX download",
+        "access_date": "2026-05-28",
+        "license": "CC-BY-4.0; cite dataset creators and original papers when reused",
+        "expected_data_volume": "medium",
+        "estimated_records": 229,
+        "available_data_types": [
+          "MOF-substrate descriptors",
+          "plasmonic-metal descriptors",
+          "analyte names and phases",
+          "measurement conditions",
+          "LOD and linear-range values",
+          "DOI-linked provenance"
+        ],
+        "expected_fields": [
+          "material_name",
+          "material_class",
+          "sensor_architecture",
+          "sensing_target",
+          "measurement_type",
+          "measurement_value",
+          "measurement_unit",
+          "doi",
+          "notes"
+        ],
+        "extraction_strategy": {
+          "recommended_method": "use as an external validation and comparison source for MOF/plasmonic sensing records",
+          "target_content": "MOF name, metal configuration, analyte phase, LOD, linear range, recovery, and DOI fields"
+        },
+        "notes": "Best overlap with this project because it combines material/substrate, analyte, performance metrics, and bibliographic provenance. It is SERS-focused rather than photonic-crystal-focused, so values should be used for comparison rather than automatic replacement."
+      },
+      {
+        "source_id": "db_opticalmaterials",
+        "name": "OpticalMaterials.org refractive-index and dielectric-constant databases",
+        "source_type": "optical_property_database",
+        "url": "https://opticalmaterials.org/databases/",
+        "doi": "10.1038/s41597-022-01295-5",
+        "raw_file": "",
+        "access_status": "open_access",
+        "access_method": "website query or CSV/JSON/SQL download",
+        "access_date": "2026-05-28",
+        "license": "database available for download; verify reuse terms and cite the Scientific Data paper",
+        "expected_data_volume": "large",
+        "estimated_records": 109880,
+        "available_data_types": [
+          "refractive-index records",
+          "dielectric-constant records",
+          "compound identifiers",
+          "wavelength-dependent values",
+          "DOI-linked provenance"
+        ],
+        "expected_fields": [
+          "material_name",
+          "sensing_target",
+          "measurement_type",
+          "measurement_value",
+          "measurement_unit",
+          "doi",
+          "notes"
+        ],
+        "extraction_strategy": {
+          "recommended_method": "query by material, compound formula, SMILES, or DOI for optical-property cross-checks",
+          "target_content": "refractive index, dielectric constant, wavelength, extracted value, raw value, and DOI"
+        },
+        "notes": "Useful for checking whether reported refractive-index-related sensor behavior is physically plausible and for enriching material/analyte optical context."
+      },
+      {
+        "source_id": "db_refractiveindex_info",
+        "name": "RefractiveIndex.INFO optical constants database",
+        "source_type": "optical_constants_database",
+        "url": "https://github.com/polyanskiy/refractiveindex.info-database",
+        "doi": "10.1038/s41597-023-02898-2",
+        "raw_file": "",
+        "access_status": "open_source",
+        "access_method": "GitHub YAML database or refractiveindex.info website",
+        "access_date": "2026-05-28",
+        "license": "open-source database; verify repository license before redistribution",
+        "expected_data_volume": "large",
+        "estimated_records": 0,
+        "available_data_types": [
+          "optical constants",
+          "refractive index n",
+          "extinction coefficient k",
+          "wavelength ranges",
+          "source references"
+        ],
+        "expected_fields": [
+          "material_name",
+          "measurement_type",
+          "measurement_value",
+          "measurement_unit",
+          "source_url",
+          "notes"
+        ],
+        "extraction_strategy": {
+          "recommended_method": "lookup materials and optical constants for photonic layers, metals, and sensor environments",
+          "target_content": "n/k values, wavelength range, material page, and source reference"
+        },
+        "notes": "Best reference source for optical constants of materials used in photonic and plasmonic sensor architectures. It usually validates material properties rather than sensor performance metrics."
+      },
+      {
         "source_id": "db_pubchem_analytes",
         "name": "PubChem compound records for analytes and solvents",
         "source_type": "chemical_database",
