@@ -4,9 +4,11 @@
 
 Photonic materials for optical sensing. The repository now contains a schema-aligned CSV of article-derived sensor-performance records plus raw database snapshots for validation and metadata support.
 
+Author: Базуев Роман Денисович.
+
 ## Dataset goal
 
-The dataset supports comparison of quantitative optical-sensing performance across photonic crystals, photonic crystal fibers, MOF-based photonic crystals, plasmonic/photonic hybrids, and nanophotonic resonators. The intended audience is students and researchers practicing structured materials-data extraction.
+The dataset supports comparison of quantitative optical-sensing performance across photonic crystals, photonic crystal fibers, MOF-based photonic crystals, plasmonic/photonic hybrids, and nanophotonic resonators. The intended audience is course participants and researchers practicing structured materials-data extraction.
 
 ## Source summary
 
@@ -34,7 +36,7 @@ PDF extraction produced 22 records from 6 primary PDF articles. Web extraction p
 
 ## Validation summary
 
-`python scripts/validate_project.py` passed on `2026-05-28`. `pytest -q` passed with 14 tests.
+`python scripts/validate_project.py` passed on `2026-05-29`. `pytest -q` passed with 14 tests.
 
 ## Limitations
 

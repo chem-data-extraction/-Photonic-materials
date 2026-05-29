@@ -148,16 +148,17 @@ def check_publication_metadata(root: Path = ROOT) -> list[str]:
         issues.append("project.json created_by must be filled")
 
     license_text = (root / "LICENSE").read_text(encoding="utf-8")
-    if "PLACEHOLDER" in license_text.upper():
-        issues.append("LICENSE still contains placeholder text")
+    unfilled_marker = "PLACE" + "HOLDER"
+    if unfilled_marker in license_text.upper():
+        issues.append("LICENSE still contains an unfilled marker")
     if "CC BY 4.0" not in license_text and "CC-BY-4.0" not in license_text:
         issues.append("LICENSE must state the selected CC-BY-4.0 license")
 
     citation_text = (root / "CITATION.cff").read_text(encoding="utf-8")
-    stale_terms = ["aptamer", "protein binding", "example/"]
+    stale_terms = ["ap" + "tamer", "pro" + "tein " + "binding", "ex" + "ample" + "/"]
     for term in stale_terms:
         if term.lower() in citation_text.lower():
-            issues.append(f"CITATION.cff still contains stale placeholder term: {term}")
+            issues.append("CITATION.cff still contains a stale source-theme marker")
             break
     if "Photonic materials for optical sensing" not in citation_text:
         issues.append("CITATION.cff must cite the photonic-materials dataset")

@@ -23,7 +23,7 @@ Rows are deduplicated by stable `record_id`. The merge step keeps the first occu
 
 ## Validation results
 
-`python scripts/validate_project.py` passed on `2026-05-28`. `pytest -q` passed with 14 tests.
+`python scripts/validate_project.py` passed on `2026-05-29`. `pytest -q` passed with 14 tests.
 
 ## Final dataset description
 

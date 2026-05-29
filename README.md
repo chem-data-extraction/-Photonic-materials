@@ -4,6 +4,8 @@ Publication-ready **dataset project** for the course *Extraction and preparation
 
 **Project topic:** Photonic materials for optical sensing.
 
+**Author:** Базуев Роман Денисович.
+
 ## Scientific task
 
 Collect quantitative performance measurements for optical sensors based on photonic materials, including photonic crystals, plasmonic/photonic hybrid structures, photonic crystal fibers, MOF-based photonic crystals, and related nanophotonic sensing platforms.
@@ -39,7 +41,7 @@ Develop the repository in five steps (see `reports/`):
 4. **Web extraction** — `specs/web_extraction_manifest.json`, `scripts/extract_web.py`, Practice 4 report  
 5. **Cleaning, normalization and publication** — `specs/cleaning_pipeline.json`, cleaning scripts, Practice 5 report  
 
-Complete **`reports/final_report.md`** and **`dataset_card.md`** before submission.
+The project summary is in **`reports/final_report.md`**. The publication-facing dataset description is in **`dataset_card.md`**.
 
 ## Data pipeline
 
@@ -59,27 +61,35 @@ raw (PDF / web / external)
 - `dataset_card.md`, `LICENSE`, `CITATION.cff`
 - Passing validation and tests
 
-## How to run validation
+## Reproduce the dataset
 
 ```bash
 pip install -r requirements.txt
-python scripts/validate_project.py
-pytest
-```
-
-## How to build the dataset
-
-```bash
-python scripts/build_dataset.py    # merge extracts → interim + processed
-python scripts/clean_dataset.py    # normalize and write processed dataset
-```
-
-Extraction commands:
-
-```bash
 python scripts/extract_pdf.py
 python scripts/extract_web.py
+python scripts/build_dataset.py
+python scripts/clean_dataset.py
 ```
+
+Expected outputs:
+
+| Command | Main output |
+|---------|-------------|
+| `python scripts/extract_pdf.py` | `data/extracted/pdf_extracted_records.csv` with 22 records |
+| `python scripts/extract_web.py` | `data/extracted/web_extracted_records.csv` with 20 records |
+| `python scripts/build_dataset.py` | `data/interim/merged_records.csv` and `data/processed/dataset.csv` with 42 rows |
+| `python scripts/clean_dataset.py` | cleaned `data/processed/dataset.csv` aligned with `specs/dataset_schema.json` |
+
+External database snapshots are not mixed into the processed CSV automatically. They are documented in `specs/database_download_manifest.json` and stored in `data/raw/external/` for validation, comparison, and metadata support.
+
+## Validate the project
+
+```bash
+python scripts/validate_project.py
+pytest -q
+```
+
+The validation step checks required artifacts, JSON parsing, schema alignment, unique record identifiers, source-map links, numeric measurement values, and publication metadata.
 
 ## License and citation
 

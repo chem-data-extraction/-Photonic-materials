@@ -3,9 +3,9 @@ message: "If you use this dataset, please cite it as below."
 type: dataset
 title: "Photonic materials for optical sensing"
 authors:
-  - name: "Roma"
+  - name: "Базуев Роман Денисович"
 version: 0.1.0
-date-released: 2026-05-28
+date-released: 2026-05-29
 keywords:
   - photonic materials
   - optical sensing

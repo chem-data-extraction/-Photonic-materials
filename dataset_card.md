@@ -37,7 +37,7 @@ Field definitions and examples are in `specs/dataset_schema.json`. The final CSV
 
 ## Validation
 
-Validation rules are in `specs/validation_rules.json`. On `2026-05-28`, `python scripts/validate_project.py` passed and `pytest -q` passed with 14 tests.
+Validation rules are in `specs/validation_rules.json`. On `2026-05-29`, `python scripts/validate_project.py` passed and `pytest -q` passed with 14 tests.
 
 ## Known Limitations
 
@@ -63,5 +63,5 @@ licenses and terms; see `specs/source_map.json` and
 
 ## Citation
 
-Use the metadata in `CITATION.cff`: Roma (2026), *Photonic materials for optical
-sensing*, version 0.1.0.
+Use the metadata in `CITATION.cff`: Базуев Роман Денисович (2026),
+*Photonic materials for optical sensing*, version 0.1.0.
