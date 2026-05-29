@@ -53,6 +53,22 @@ raw (PDF / web / external)
   → validate (rules + pytest)
 ```
 
+## Optional DeepSeek LLM extraction
+
+The reproducible dataset pipeline remains rule-based by default. An optional DeepSeek-assisted helper can draft review-only candidate records from PDF text:
+
+```bash
+python scripts/extract_llm_candidates.py --source-id paper_wang_2022_uio66_pc
+```
+
+This step requires a DeepSeek API key in `DEEPSEEK_API_KEY`. On PowerShell:
+
+```powershell
+$env:DEEPSEEK_API_KEY = "your_deepseek_api_key"
+```
+
+Optional overrides are `DEEPSEEK_MODEL` (default: `deepseek-v4-pro`) and `DEEPSEEK_API_BASE` (default: `https://api.deepseek.com`). The script writes candidates to `data/extracted/llm_candidate_records.jsonl`; this file is ignored by Git and is not read by `scripts/build_dataset.py`. Review `evidence_text`, `evidence_page`, units, and schema mapping before copying any candidate into a final CSV.
+
 ## Required final artifacts
 
 - `data/processed/dataset.csv` aligned with `specs/dataset_schema.json`

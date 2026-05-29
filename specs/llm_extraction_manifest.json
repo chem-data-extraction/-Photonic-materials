@@ -1,0 +1,43 @@
+{
+  "llm_extraction_version": "0.1.0",
+  "llm_extraction_process": "Optional DeepSeek-assisted extraction drafts review-only candidate records from local PDF text. Candidate records are not merged into the publication dataset automatically.",
+  "provider": "DeepSeek",
+  "api": {
+    "base_url": "https://api.deepseek.com",
+    "chat_completions_endpoint": "/chat/completions",
+    "authentication": "Bearer token from DEEPSEEK_API_KEY",
+    "json_mode": true
+  },
+  "script": "scripts/extract_llm_candidates.py",
+  "record_schema": "specs/dataset_schema.json",
+  "source_map": "specs/source_map.json",
+  "input_policy": {
+    "source_type": "Local PDF text extracted with PyMuPDF",
+    "page_selection": "Pages are scored by sensing-performance keywords and the highest scoring pages are sent to DeepSeek.",
+    "review_policy": "All LLM outputs are marked needs_review=true and must be checked against evidence_text before promotion to CSV records."
+  },
+  "defaults": {
+    "model": "deepseek-v4-pro",
+    "api_base": "https://api.deepseek.com",
+    "output_file": "data/extracted/llm_candidate_records.jsonl",
+    "max_pages_per_source": 4,
+    "max_chars_per_page": 4500,
+    "max_tokens": 3500,
+    "timeout_seconds": 90
+  },
+  "environment": {
+    "required": [
+      "DEEPSEEK_API_KEY"
+    ],
+    "optional": [
+      "DEEPSEEK_MODEL",
+      "DEEPSEEK_API_BASE"
+    ]
+  },
+  "output_contract": {
+    "format": "JSON Lines",
+    "path": "data/extracted/llm_candidate_records.jsonl",
+    "status": "candidate_only",
+    "merge_policy": "Not read by scripts/build_dataset.py. Human review is required before any candidate is copied into a schema-aligned CSV."
+  }
+}
