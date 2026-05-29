@@ -6,34 +6,36 @@
 
 - `data/extracted/pdf_extracted_records.csv`
 - `data/extracted/web_extracted_records.csv`
-- `data/extracted/downoaded_records.csv`
+- `data/raw/external/*` database snapshots documented in `specs/database_download_manifest.json` for validation and metadata support
 - (optional) `data/interim/merged_records.csv`
 
 ## Cleaning steps
 
-Walk through each step in `specs/cleaning_pipeline.json`: merge, units, sequences, missing values, deduplication, validation, export.
+Walk through each step in `specs/cleaning_pipeline.json`: merge, unit preservation, text cleanup, missing values, deduplication, validation, export.
 
 ## Normalization rules
 
-Document unit → nM conversion, sequence uppercase rules, and missing-value tokens.
+The final schema preserves article-reported units (`nm`, `pm`, `nm/RIU`, `ppm`, `pM`, `s`, `RIU`, and `dimensionless`) rather than converting across incompatible sensor-performance metrics. Missing-value tokens are normalized by `scripts/clean_dataset.py`; no sequence fields are present in the photonic-materials schema.
 
 ## Deduplication strategy
 
-Keys used to define duplicates (e.g. `record_id`, or sequence + target + value + source_id).
+Rows are deduplicated by stable `record_id`. The merge step keeps the first occurrence when the same record appears in multiple extraction outputs.
 
 ## Validation results
 
-List errors and warnings.
+`python scripts/validate_project.py` passed on `2026-05-28`. `pytest -q` passed with 14 tests.
 
 ## Final dataset description
 
-Row count, targets covered, date built, path: `data/processed/dataset.csv`.
+The final dataset contains 42 article-derived sensor-performance records and is stored at `data/processed/dataset.csv`.
+
+The project publication metadata was also completed: `project.json` now marks the project as `practice_05_completed`, `LICENSE` selects CC-BY-4.0 for project-authored materials, `CITATION.cff` describes the photonic-materials dataset, and the final report and dataset card summarize source coverage, limitations, license boundaries, and citation information.
 
 ## Publication readiness checklist
 
-- [ ] `dataset.csv` matches `specs/dataset_schema.json`
-- [ ] All `source_id` values documented in source map
-- [ ] LICENSE replaced (not placeholder)
-- [ ] `CITATION.cff` completed
-- [ ] `dataset_card.md` updated
-- [ ] `reports/final_report.md` complete
+- [x] `dataset.csv` matches `specs/dataset_schema.json`
+- [x] All `source_id` values documented in source map
+- [x] LICENSE finalized
+- [x] `CITATION.cff` completed
+- [x] `dataset_card.md` updated
+- [x] `reports/final_report.md` complete

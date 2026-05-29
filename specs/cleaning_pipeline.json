@@ -18,30 +18,30 @@
     },
     {
       "step_id": "normalize_units",
-      "operation": "unit_conversion",
-      "description": "Convert measurement_value to nanomolar (normalized_value_nm) using measurement_unit.",
+      "operation": "unit_preservation",
+      "description": "Preserve article-reported sensor-performance units because sensitivity, wavelength shift, LOD, response time, and quality factor are not mutually convertible.",
       "fields": ["measurement_value", "measurement_unit"],
       "output_file": "data/interim/merged_records.csv"
     },
     {
-      "step_id": "standardize_sequences",
-      "operation": "sequence_cleanup",
-      "description": "Uppercase aptamer sequences and remove whitespace or invalid characters.",
-      "fields": ["aptamer_sequence"],
+      "step_id": "standardize_text_fields",
+      "operation": "text_cleanup",
+      "description": "Trim string fields and keep source-reported material, architecture, target, and notes text aligned with the schema.",
+      "fields": ["material_name", "sensor_architecture", "sensing_target", "notes"],
       "output_file": "data/interim/merged_records.csv"
     },
     {
       "step_id": "standardize_missing_values",
       "operation": "missing_value_cleanup",
       "description": "Map NA, N/A, -, empty strings to null-like values for pandas export.",
-      "fields": ["measurement_value", "buffer", "notes"],
+      "fields": ["measurement_value", "measurement_unit", "notes"],
       "output_file": "data/interim/merged_records.csv"
     },
     {
       "step_id": "deduplicate_records",
       "operation": "deduplicate",
-      "description": "Remove duplicate rows sharing record_id or identical sequence+target+value+source.",
-      "fields": ["record_id", "aptamer_sequence", "target_name", "measurement_value", "source_id"],
+      "description": "Remove duplicate rows sharing record_id.",
+      "fields": ["record_id", "source_id", "measurement_type", "measurement_value"],
       "output_file": "data/interim/merged_records.csv"
     },
     {

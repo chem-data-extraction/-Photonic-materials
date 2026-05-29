@@ -19,11 +19,17 @@ REQUIRED_FILES = [
     "specs/web_extraction_manifest.json",
     "specs/cleaning_pipeline.json",
     "specs/validation_rules.json",
+    "specs/database_download_manifest.json",
     "data/extracted/pdf_extracted_records.csv",
     "data/extracted/web_extracted_records.csv",
     "data/processed/dataset.csv",
     "scripts/build_dataset.py",
     "scripts/clean_dataset.py",
+    "reports/practice_05_cleaning_publication.md",
+    "reports/final_report.md",
+    "dataset_card.md",
+    "CITATION.cff",
+    "LICENSE",
 ]
 
 CONFIDENCE_ALLOWED = {"", "high", "medium", "low", "unknown"}
@@ -132,6 +138,33 @@ def check_extraction_confidence(df: pd.DataFrame) -> list[str]:
     return warnings
 
 
+def check_publication_metadata(root: Path = ROOT) -> list[str]:
+    issues: list[str] = []
+
+    project = load_json(root / "project.json")
+    if project.get("project_status") != "practice_05_completed":
+        issues.append("project.json project_status must be practice_05_completed")
+    if not str(project.get("created_by", "")).strip():
+        issues.append("project.json created_by must be filled")
+
+    license_text = (root / "LICENSE").read_text(encoding="utf-8")
+    if "PLACEHOLDER" in license_text.upper():
+        issues.append("LICENSE still contains placeholder text")
+    if "CC BY 4.0" not in license_text and "CC-BY-4.0" not in license_text:
+        issues.append("LICENSE must state the selected CC-BY-4.0 license")
+
+    citation_text = (root / "CITATION.cff").read_text(encoding="utf-8")
+    stale_terms = ["aptamer", "protein binding", "example/"]
+    for term in stale_terms:
+        if term.lower() in citation_text.lower():
+            issues.append(f"CITATION.cff still contains stale placeholder term: {term}")
+            break
+    if "Photonic materials for optical sensing" not in citation_text:
+        issues.append("CITATION.cff must cite the photonic-materials dataset")
+
+    return issues
+
+
 def validate(root: Path = ROOT) -> tuple[list[str], list[str]]:
     """Return (errors, warnings)."""
     errors: list[str] = []
@@ -151,6 +184,7 @@ def validate(root: Path = ROOT) -> tuple[list[str], list[str]]:
     errors.extend(check_dataset_columns(df, schema))
     errors.extend(check_record_id(df))
     errors.extend(check_measurement_value(df))
+    errors.extend(check_publication_metadata(root))
 
     src_errors, src_warnings = check_source_id(df, source_map)
     errors.extend(src_errors)

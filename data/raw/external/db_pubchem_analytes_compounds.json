@@ -1,0 +1,149 @@
+{
+  "download_date": "2026-05-28",
+  "records": [
+    {
+      "query_name": "chlorobenzene",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/chlorobenzene/property/MolecularFormula,MolecularWeight,CanonicalSMILES,InChIKey,IUPACName/JSON",
+      "response": {
+        "PropertyTable": {
+          "Properties": [
+            {
+              "CID": 7964,
+              "MolecularFormula": "C6H5Cl",
+              "MolecularWeight": "112.55",
+              "ConnectivitySMILES": "C1=CC=C(C=C1)Cl",
+              "InChIKey": "MVPPADPHJFYWMZ-UHFFFAOYSA-N",
+              "IUPACName": "chlorobenzene"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "query_name": "methane",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/methane/property/MolecularFormula,MolecularWeight,CanonicalSMILES,InChIKey,IUPACName/JSON",
+      "response": {
+        "PropertyTable": {
+          "Properties": [
+            {
+              "CID": 297,
+              "MolecularFormula": "CH4",
+              "MolecularWeight": "16.043",
+              "ConnectivitySMILES": "C",
+              "InChIKey": "VNWKTOKETHGBQD-UHFFFAOYSA-N",
+              "IUPACName": "methane"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "query_name": "helium",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/helium/property/MolecularFormula,MolecularWeight,CanonicalSMILES,InChIKey,IUPACName/JSON",
+      "response": {
+        "PropertyTable": {
+          "Properties": [
+            {
+              "CID": 23987,
+              "MolecularFormula": "He",
+              "MolecularWeight": "4.00260",
+              "ConnectivitySMILES": "[He]",
+              "InChIKey": "SWQJXJOGLNCZEY-UHFFFAOYSA-N",
+              "IUPACName": "helium"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "query_name": "argon",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/argon/property/MolecularFormula,MolecularWeight,CanonicalSMILES,InChIKey,IUPACName/JSON",
+      "response": {
+        "PropertyTable": {
+          "Properties": [
+            {
+              "CID": 23968,
+              "MolecularFormula": "Ar",
+              "MolecularWeight": "39.9",
+              "ConnectivitySMILES": "[Ar]",
+              "InChIKey": "XKRFYHLGVUSROY-UHFFFAOYSA-N",
+              "IUPACName": "argon"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "query_name": "carbon dioxide",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/carbon%20dioxide/property/MolecularFormula,MolecularWeight,CanonicalSMILES,InChIKey,IUPACName/JSON",
+      "response": {
+        "PropertyTable": {
+          "Properties": [
+            {
+              "CID": 280,
+              "MolecularFormula": "CO2",
+              "MolecularWeight": "44.009",
+              "ConnectivitySMILES": "C(=O)=O",
+              "InChIKey": "CURLTUGMZLYLDI-UHFFFAOYSA-N",
+              "IUPACName": "carbon dioxide"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "query_name": "glucose",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/glucose/property/MolecularFormula,MolecularWeight,CanonicalSMILES,InChIKey,IUPACName/JSON",
+      "response": {
+        "PropertyTable": {
+          "Properties": [
+            {
+              "CID": 5793,
+              "MolecularFormula": "C6H12O6",
+              "MolecularWeight": "180.16",
+              "ConnectivitySMILES": "C(C1C(C(C(C(O1)O)O)O)O)O",
+              "InChIKey": "WQZGKKKJIJFFOK-GASJEMHNSA-N",
+              "IUPACName": "(3R,4S,5S,6R)-6-(hydroxymethyl)oxane-2,3,4,5-tetrol"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "query_name": "benzene",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/benzene/property/MolecularFormula,MolecularWeight,CanonicalSMILES,InChIKey,IUPACName/JSON",
+      "response": {
+        "PropertyTable": {
+          "Properties": [
+            {
+              "CID": 241,
+              "MolecularFormula": "C6H6",
+              "MolecularWeight": "78.11",
+              "ConnectivitySMILES": "C1=CC=CC=C1",
+              "InChIKey": "UHOVQNZJYSORNB-UHFFFAOYSA-N",
+              "IUPACName": "benzene"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "query_name": "chloroform",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/chloroform/property/MolecularFormula,MolecularWeight,CanonicalSMILES,InChIKey,IUPACName/JSON",
+      "response": {
+        "PropertyTable": {
+          "Properties": [
+            {
+              "CID": 6212,
+              "MolecularFormula": "CHCl3",
+              "MolecularWeight": "119.37",
+              "ConnectivitySMILES": "C(Cl)(Cl)Cl",
+              "InChIKey": "HEDRZPFGACZZDS-UHFFFAOYSA-N",
+              "IUPACName": "chloroform"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

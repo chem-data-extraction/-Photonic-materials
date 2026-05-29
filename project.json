@@ -1,7 +1,7 @@
 {
   "project_id": "photonic_materials_optical_sensing",
   "project_title": "Photonic materials for optical sensing",
-  "project_status": "practice_04_completed",
+  "project_status": "practice_05_completed",
   "scientific_task": "Collect quantitative performance data for optical sensors based on photonic materials, including photonic crystals, plasmonic/photonic hybrid structures, photonic crystal fibers, MOF-based photonic crystals, and related nanophotonic sensing platforms.",
   "record_definition": {
     "one_record": "One reported quantitative sensor-performance measurement for a specific photonic material or device architecture, analyte or sensing target, and source under stated experimental or simulation conditions."
@@ -16,7 +16,7 @@
   "final_dataset_path": "data/processed/dataset.csv",
   "schema_path": "specs/dataset_schema.json",
   "source_map_path": "specs/source_map.json",
-  "created_by": "",
+  "created_by": "Roma",
   "created_date": "2026-05-26",
   "version": "0.1.0"
 }

@@ -1,6 +1,6 @@
 # Photonic materials for optical sensing
 
-Publication-ready **dataset project template** for the course *Extraction and preparation of chemical information*. Students move from a research topic to a structured, validated dataset with documented sources, extraction steps, cleaning pipeline, reports, and citation metadata.
+Publication-ready **dataset project** for the course *Extraction and preparation of chemical information*. The repository moves from a research topic to a structured, validated dataset with documented sources, extraction steps, cleaning pipeline, reports, and citation metadata.
 
 **Project topic:** Photonic materials for optical sensing.
 
@@ -74,7 +74,7 @@ python scripts/build_dataset.py    # merge extracts → interim + processed
 python scripts/clean_dataset.py    # normalize and write processed dataset
 ```
 
-Placeholder extraction (no PDF/HTML libraries required):
+Extraction commands:
 
 ```bash
 python scripts/extract_pdf.py
@@ -83,6 +83,6 @@ python scripts/extract_web.py
 
 ## License and citation
 
-- Replace the placeholder in **`LICENSE`** before publication (e.g. CC-BY-4.0 or CC0-1.0, subject to upstream source licenses).
-- Fill in **`CITATION.cff`** with authors, version, and repository URL.
-- Summarize the dataset for users in **`dataset_card.md`**.
+- Processed records and project-authored materials are released under **CC-BY-4.0**; raw third-party files retain upstream licenses.
+- Citation metadata is provided in **`CITATION.cff`**.
+- The user-facing dataset summary is provided in **`dataset_card.md`**.

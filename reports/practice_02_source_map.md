@@ -52,6 +52,20 @@ Databases are used in two roles: (1) external comparison sources with overlappin
 
 The MOF-based SERS dataset is the closest field-level match because it combines `material/substrate`, `sensing_target`, `measurement_type`-like performance values, and DOI provenance. OpticalMaterials.org and RefractiveIndex.INFO do not report sensor performance, but they are useful for validating optical context, especially records expressed in `nm/RIU`, `RIU`, and wavelength-shift units.
 
+## Downloaded database artifacts
+
+The database sources listed above were downloaded to `data/raw/external/` on `2026-05-28`. The reproducible file inventory, URLs, byte counts, and SHA-256 checksums are stored in `specs/database_download_manifest.json`.
+
+| source_id | Local raw artifact(s) | Role in this project |
+|-----------|------------------------|----------------------|
+| `db_mof_sers_zenodo` | `db_mof_sers_zenodo_dataset.csv`, `db_mof_sers_zenodo_dataset.xlsx`, README and pore-diameter workbook | External comparison source for MOF/plasmonic sensing performance fields |
+| `db_opticalmaterials` | `db_opticalmaterials_scidata_database.csv`, `db_opticalmaterials_master.zip` | Optical-property plausibility checks |
+| `db_refractiveindex_info` | `db_refractiveindex_info_database_main.zip` | Material optical-constant reference |
+| `db_pubchem_analytes` | `db_pubchem_analytes_compounds.json` | Analyte-name and formula normalization |
+| `db_pmc_open_access` | `db_pmc_open_access_idconv.json`, three PMC OAI XML records | Open-access full-text cross-checks for article extraction |
+
+These external files are kept as raw database snapshots. The processed CSV remains based on primary article extraction; database values are reserved for validation, comparison, and metadata normalization unless a later practice explicitly defines a separate database-ingestion table.
+
 ### Aggregators
 
 Aggregators are used for bibliographic validation and snowballing only:

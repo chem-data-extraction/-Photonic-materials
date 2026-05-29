@@ -9,7 +9,7 @@ The machine-readable plan is stored in `specs/web_extraction_manifest.json`. The
 | source_id | page_id | URL | Extracted records |
 |-----------|---------|-----|-------------------|
 | `paper_wang_2022_uio66_pc` | `rsc_wang_2022_uio66_pc_html` | `https://pubs.rsc.org/en/content/articlehtml/2022/ra/d2ra05494a` | 5 |
-| `paper_nazeri_2020_hcpcf_mzi_gas` | `pmc_nazeri_2020_hcpcf_mzi_html` | `https://pmc.ncbi.nlm.nih.gov/articles/PMC7284782/` | 3 |
+| `paper_nazeri_2020_hcpcf_mzi_gas` | `pmc_nazeri_2020_hcpcf_mzi_html` | `https://pmc.ncbi.nlm.nih.gov/articles/PMC7284782/` | 11 |
 | `paper_shaban_2017_plasmonic_1d_pc` | `pmc_shaban_2017_plasmonic_1d_pc_html` | `https://pmc.ncbi.nlm.nih.gov/articles/PMC5296759/` | 2 |
 | `paper_zaky_2020_tamm_1d_pc_gas` | `pmc_zaky_2020_tamm_1d_pc_html` | `https://pmc.ncbi.nlm.nih.gov/articles/PMC7297992/` | 2 |
 
@@ -47,12 +47,12 @@ Manual curation is used for the same reason as in Practice 3: the target values 
 
 ## Extracted records
 
-The web extraction produced 12 schema-aligned records:
+The web extraction produced 20 schema-aligned records:
 
 | Source | Number of records | Main extracted metrics |
 |--------|-------------------|------------------------|
 | Wang et al. 2022 UiO-66 3D PC | 5 | chlorobenzene concentration-series wavelength shifts at 80-400 ppm |
-| Nazeri et al. 2020 HC-PCF MZI | 3 | helium, methane, and argon spectral shifts for sensor C |
+| Nazeri et al. 2020 HC-PCF MZI | 11 | helium, methane, and argon spectral shifts for sensors A, B, and C; RI sensitivity for sensors A and B |
 | Shaban et al. 2017 Au/1D PC | 2 | separate SPR-resonance and left-PBG-edge RI sensitivity values |
 | Zaky et al. 2020 Tamm-state 1D PC | 2 | theoretical intermediate sensitivity values before final optimization |
 
@@ -63,7 +63,7 @@ All rows use the Practice 1 schema:
 ## Mapping decisions
 
 - The Wang et al. web records split the chlorobenzene concentration-response values into separate `wavelength_shift` rows for 80, 160, 240, 320, and 400 ppm. The 500 ppm value is already present in the PDF extraction, so it was not duplicated here.
-- The Nazeri et al. web records use `wavelength_shift` with units of `pm` because Table 1 reports spectral shifts for pure gases. The methane value is negative and is kept as reported.
+- The Nazeri et al. web records use `wavelength_shift` with units of `pm` because Table 1 reports spectral shifts for pure gases. Methane shifts are negative and are kept as reported. Table 1 also contributes RI sensitivity records for sensors A and B; sensor C sensitivity is already captured by the PDF extraction.
 - The Shaban et al. records use `sensitivity` with units of `nm/RIU`; the specific resonance label is preserved in `notes`.
 - The Zaky et al. records are retained because the source map includes simulation/theoretical sources, but `notes` explicitly mark the values as theoretical intermediate optimization results.
 - No review article values were ingested directly. Reviews remain discovery and terminology sources as stated in Practice 2.
@@ -80,6 +80,5 @@ All rows use the Practice 1 schema:
 - `specs/web_extraction_manifest.json` - selected web pages, parser plan, validation terms, and curated records.
 - `scripts/extract_web.py` - reproducible export script for the web manifest.
 - `data/raw/web/*.html` - local article HTML snapshots.
-- `data/extracted/web_extracted_records.csv` - 12 schema-aligned web records.
+- `data/extracted/web_extracted_records.csv` - 20 schema-aligned web records.
 - `data/extracted/extraction_log.jsonl` - JSONL audit trail with web extraction events.
-

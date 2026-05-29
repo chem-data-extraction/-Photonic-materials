@@ -16,3 +16,13 @@ Store **unaltered** source files here. Do not edit files in this folder after do
 - Extracted record CSVs (use `data/extracted/`)
 
 Document each file’s `source_id`, download date, and license in your source map and practice reports.
+
+## External database snapshots
+
+Database artifacts downloaded for Practice 2 are stored in `external/` and inventoried in `specs/database_download_manifest.json`. The current snapshots include:
+
+- Zenodo MOF-based SERS dataset files for `db_mof_sers_zenodo`
+- OpticalMaterials.org/Figshare CSV and project archive for `db_opticalmaterials`
+- RefractiveIndex.INFO GitHub database ZIP for `db_refractiveindex_info`
+- PubChem PUG-REST analyte metadata for `db_pubchem_analytes`
+- PMC ID-conversion JSON and OAI XML records for `db_pmc_open_access`

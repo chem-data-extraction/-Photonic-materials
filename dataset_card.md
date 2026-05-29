@@ -1,61 +1,67 @@
-# Dataset card — Aptamer–protein binding dataset
+# Dataset Card - Photonic Materials For Optical Sensing
 
-## Dataset title
+## Dataset Title
 
-Aptamer–protein binding dataset (course template v0.1.0)
+Photonic materials for optical sensing
 
-## Dataset summary
+## Dataset Summary
 
-Tabular collection of experimentally reported aptamer–protein binding measurements, including sequences, targets, affinity values, assay metadata, and provenance fields. This repository is a **template** with illustrative example rows.
+This dataset contains article-derived quantitative performance measurements for optical sensors based on photonic materials, including photonic crystals, hollow-core photonic crystal fibers, MOF-based photonic crystals, plasmonic/photonic hybrids, and nanophotonic resonators.
 
-## Scientific task
+## Scientific Task
 
-Support comparison of reported binding affinities (e.g. Kd) and assay conditions across literature and curated database sources for aptamer–protein pairs.
+Support comparison of reported sensor-performance metrics such as sensitivity, limit of detection, wavelength shift, response time, recovery time, quality factor, and resolution across photonic-material sensing platforms.
 
-## Record unit
+## Record Unit
 
-One row = one experimentally reported binding measurement for one aptamer–target pair from one source.
+One row = one reported quantitative sensor-performance measurement for one material/device architecture, one sensing target, and one source.
 
-## Data sources
+## Data Sources
 
-Defined in `specs/source_map.json`: journal PDFs, supplementary tables, aptamer databases, metadata aggregators, GitHub releases, and optional ML dataset exports (with license review).
+Primary records come from journal articles documented in `specs/source_map.json`. External database snapshots from Zenodo, OpticalMaterials.org, RefractiveIndex.INFO, PubChem, and PMC are stored in `data/raw/external/` and inventoried in `specs/database_download_manifest.json`; they support validation, comparison, and metadata normalization rather than replacing primary article values.
 
-## Data extraction procedure
+## Data Extraction Procedure
 
-1. PDF: `scripts/extract_pdf.py` guided by `specs/pdf_extraction_manifest.json`
-2. Web: `scripts/extract_web.py` guided by `specs/web_extraction_manifest.json`
-3. Logs: `data/extracted/extraction_log.jsonl`
+1. PDF extraction: `scripts/extract_pdf.py` guided by `specs/pdf_extraction_manifest.json`
+2. Web extraction: `scripts/extract_web.py` guided by `specs/web_extraction_manifest.json`
+3. Database downloads: raw snapshots documented by `specs/database_download_manifest.json`
+4. Logs: `data/extracted/extraction_log.jsonl`
 
-## Data cleaning and normalization
+## Data Cleaning And Normalization
 
-`scripts/build_dataset.py` merges extracts; `scripts/clean_dataset.py` normalizes sequences, units (to nM), missing values, and deduplicates per `specs/cleaning_pipeline.json`.
+`scripts/build_dataset.py` merges extracted article records into `data/interim/merged_records.csv`; `scripts/clean_dataset.py` aligns columns, normalizes missing values and confidence labels, deduplicates by `record_id`, and writes `data/processed/dataset.csv`.
 
-## Dataset schema
+## Dataset Schema
 
-Field definitions, types, and examples: `specs/dataset_schema.json`. Final columns in `data/processed/dataset.csv`.
+Field definitions and examples are in `specs/dataset_schema.json`. The final CSV contains 42 rows and uses these columns exactly.
 
 ## Validation
 
-Rules in `specs/validation_rules.json`; checks via `scripts/validate_project.py` and `tests/test_required_artifacts.py`.
+Validation rules are in `specs/validation_rules.json`. On `2026-05-28`, `python scripts/validate_project.py` passed and `pytest -q` passed with 14 tests.
 
-## Known limitations
+## Known Limitations
 
-- Example DOIs and URLs are placeholders.
-- Template rows are not verified against live sources.
-- Some sources may be paywalled or not redistributable—confirm LICENSE before publication.
+- Units are preserved as reported and are not converted across different metric types.
+- Some records are theoretical simulations and are marked in `notes`.
+- External databases are downloaded as raw references; their values are not automatically mixed into the processed article-extraction dataset.
+- License terms differ by upstream source and should be checked before redistribution.
 
-## Recommended use
+## Recommended Use
 
-Teaching structured scientific data extraction; prototyping pipelines; benchmarking parsing workflows on aptamer binding tables.
+Teaching structured scientific data extraction; comparing reported photonic-sensor metrics; prototyping cleaning and validation workflows for materials-informatics datasets.
 
-## Not recommended use
+## Not Recommended Use
 
-Clinical decision-making; uncritical meta-analysis without re-verifying primary sources; commercial use without license review.
+Clinical or safety-critical decision-making; direct meta-analysis without rechecking primary articles and source licenses.
 
 ## License
 
-See `LICENSE` — replace placeholder before publication (e.g. CC-BY-4.0 or CC0-1.0 subject to upstream data licenses).
+Processed records and project-authored materials are released under CC-BY-4.0.
+Raw third-party source files and database snapshots retain their upstream
+licenses and terms; see `specs/source_map.json` and
+`specs/database_download_manifest.json`.
 
 ## Citation
 
-See `CITATION.cff`. Update authors, version, and repository URL before release.
+Use the metadata in `CITATION.cff`: Roma (2026), *Photonic materials for optical
+sensing*, version 0.1.0.

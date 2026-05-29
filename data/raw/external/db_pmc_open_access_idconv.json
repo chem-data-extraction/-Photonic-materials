@@ -1,0 +1,44 @@
+{
+  "download_date": "2026-05-28",
+  "url": "https://www.ncbi.nlm.nih.gov/pmc/utils/idconv/v1.0/?ids=PMC7284782,PMC5296759,PMC7297992&format=json&tool=photonic-materials-course-extractor",
+  "response": {
+    "status": "ok",
+    "response-date": "2026-05-28 15:40:28",
+    "request": {
+      "warnings": [
+        "query param `email` is missing."
+      ],
+      "format": "json",
+      "ids": [
+        "PMC7284782",
+        "PMC5296759",
+        "PMC7297992"
+      ],
+      "tool": "photonic-materials-course-extractor",
+      "echo": "ids=PMC7284782%2CPMC5296759%2CPMC7297992&format=json&tool=photonic-materials-course-extractor",
+      "versions": "no",
+      "showaiid": "no",
+      "idtype": "pmcid"
+    },
+    "records": [
+      {
+        "doi": "10.3390/s20102807",
+        "pmcid": "PMC7284782",
+        "pmid": 32429091,
+        "requested-id": "PMC7284782"
+      },
+      {
+        "doi": "10.1038/srep41983",
+        "pmcid": "PMC5296759",
+        "pmid": 28176799,
+        "requested-id": "PMC5296759"
+      },
+      {
+        "doi": "10.1038/s41598-020-66427-6",
+        "pmcid": "PMC7297992",
+        "pmid": 32546751,
+        "requested-id": "PMC7297992"
+      }
+    ]
+  }
+}

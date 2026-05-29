@@ -1,0 +1,116 @@
+{
+  "database_download_version": "0.1.0",
+  "download_date": "2026-05-28",
+  "source_map": "specs/source_map.json",
+  "output_directory": "data/raw/external",
+  "policy": "Downloaded database files are preserved as raw external artifacts. They are used for validation, comparison, analyte normalization, and open-access article cross-checks; primary article extractions remain the authoritative source for processed sensor-performance records.",
+  "databases": [
+    {
+      "source_id": "db_mof_sers_zenodo",
+      "source_url": "https://zenodo.org/doi/10.5281/zenodo.10580928",
+      "license": "CC-BY-4.0",
+      "files": [
+        {
+          "path": "data/raw/external/db_mof_sers_zenodo_README.pdf",
+          "download_url": "https://zenodo.org/api/records/10580928/files/README.pdf/content",
+          "bytes": 160495,
+          "sha256": "84C94EF7D8A4F44A0EA234CCA0836422A71DEB4DE76E257873C35C5E246E50CA"
+        },
+        {
+          "path": "data/raw/external/db_mof_sers_zenodo_dataset.csv",
+          "download_url": "https://zenodo.org/api/records/10580928/files/MOF-based_SERS_dataset.csv/content",
+          "bytes": 54665,
+          "sha256": "85A3FD9A80C0FAAFA70E4C9453BE279DB27D6B76C7CA59C0457A17DD97CADE1D"
+        },
+        {
+          "path": "data/raw/external/db_mof_sers_zenodo_dataset.xlsx",
+          "download_url": "https://zenodo.org/api/records/10580928/files/MOF-based_SERS_dataset.xlsx/content",
+          "bytes": 60825,
+          "sha256": "F6F88FFF2A9196B16A2A3B5EEE6A26155251F6E2BEDA03795131898C7AFD7D65"
+        },
+        {
+          "path": "data/raw/external/db_mof_sers_zenodo_pore_diameters.xlsx",
+          "download_url": "https://zenodo.org/api/records/10580928/files/MOF-pore-diameters.xlsx/content",
+          "bytes": 10733,
+          "sha256": "BDF416AD51963DFADD4C7041E0098A835A489AFC149F7E6562BA56B3EC9D1324"
+        }
+      ]
+    },
+    {
+      "source_id": "db_opticalmaterials",
+      "source_url": "https://opticalmaterials.org/databases/",
+      "license": "Database download available from Figshare; cite DOI 10.1038/s41597-022-01295-5.",
+      "files": [
+        {
+          "path": "data/raw/external/db_opticalmaterials_scidata_database.csv",
+          "download_url": "https://ndownloader.figshare.com/files/33982973",
+          "bytes": 27644249,
+          "sha256": "D8E440EB76379DC921CEF0246E01C8F7F102CD4A46A8950CBDDB330D8C6D4C49"
+        },
+        {
+          "path": "data/raw/external/db_opticalmaterials_master.zip",
+          "download_url": "https://ndownloader.figshare.com/files/31816742",
+          "bytes": 18776806,
+          "sha256": "3FAFAEFF4D854EEA72E5DBA5C928ED23EACCA6EDC0A93ADA2FF69BFFBDB7124B"
+        }
+      ]
+    },
+    {
+      "source_id": "db_refractiveindex_info",
+      "source_url": "https://github.com/polyanskiy/refractiveindex.info-database",
+      "license": "CC0-1.0",
+      "files": [
+        {
+          "path": "data/raw/external/db_refractiveindex_info_database_main.zip",
+          "download_url": "https://codeload.github.com/polyanskiy/refractiveindex.info-database/zip/refs/heads/main",
+          "bytes": 15341382,
+          "sha256": "F278ECCFFF805F3BC4FE026343FB792E6789256BED24D41BCB24A3E15C18DB75"
+        }
+      ]
+    },
+    {
+      "source_id": "db_pubchem_analytes",
+      "source_url": "https://pubchem.ncbi.nlm.nih.gov/",
+      "license": "NIH/NLM open data terms; verify per downloaded record.",
+      "files": [
+        {
+          "path": "data/raw/external/db_pubchem_analytes_compounds.json",
+          "download_url": "PubChem PUG-REST property lookups for chlorobenzene, methane, helium, argon, carbon dioxide, glucose, benzene, and chloroform.",
+          "bytes": 5025,
+          "sha256": "4E46013815B3DA3F39954C9F990B4C19FA3E4422D99A0591E37DF9CAE3190526"
+        }
+      ]
+    },
+    {
+      "source_id": "db_pmc_open_access",
+      "source_url": "https://pmc.ncbi.nlm.nih.gov/",
+      "license": "Article-specific open-access license.",
+      "files": [
+        {
+          "path": "data/raw/external/db_pmc_open_access_idconv.json",
+          "download_url": "https://www.ncbi.nlm.nih.gov/pmc/utils/idconv/v1.0/",
+          "bytes": 1233,
+          "sha256": "2EF6083D2A7ECF9E63B4561DEFAF1EC4AF07ACF686C0A6F391A99E5CD03874D1"
+        },
+        {
+          "path": "data/raw/external/db_pmc_open_access_7284782.xml",
+          "download_url": "https://www.ncbi.nlm.nih.gov/pmc/oai/oai.cgi?verb=GetRecord&identifier=oai:pubmedcentral.nih.gov:7284782&metadataPrefix=pmc",
+          "bytes": 115233,
+          "sha256": "FDEA2FADB0319980AC2A78198A72132ACB5C1DBDC8161DDF7A3BB4E71ED940E8"
+        },
+        {
+          "path": "data/raw/external/db_pmc_open_access_5296759.xml",
+          "download_url": "https://www.ncbi.nlm.nih.gov/pmc/oai/oai.cgi?verb=GetRecord&identifier=oai:pubmedcentral.nih.gov:5296759&metadataPrefix=pmc",
+          "bytes": 84199,
+          "sha256": "35507DBF1806995397C3769A44B243A229C6F906D23D0D04BFF5A5E498224E9C"
+        },
+        {
+          "path": "data/raw/external/db_pmc_open_access_7297992.xml",
+          "download_url": "https://www.ncbi.nlm.nih.gov/pmc/oai/oai.cgi?verb=GetRecord&identifier=oai:pubmedcentral.nih.gov:7297992&metadataPrefix=pmc",
+          "bytes": 122359,
+          "sha256": "6CEB2A69CB7B24DA1B17B237E484D5DE887FACB8DB6938782CA4A90E13D93855"
+        }
+      ]
+    }
+  ]
+}

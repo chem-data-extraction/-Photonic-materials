@@ -1,7 +1,7 @@
 {
   "topic": "Photonic materials for optical sensing",
   "root_query": "photonic crystal optical sensor sensitivity limit of detection gas biosensing refractive index",
-  "source_map_version": "0.2.0",
+  "source_map_version": "0.3.0",
   "access_date": "2026-05-26",
   "selection_scope": {
     "included": [
@@ -373,7 +373,7 @@
         "source_type": "supplementary_information",
         "url": "https://pubs.rsc.org/en/content/articlelanding/2022/ra/d2ra05494a#supplementary-information",
         "doi": "10.1039/D2RA05494A",
-        "raw_file": "",
+        "raw_file": "data/raw/external/db_mof_sers_zenodo_dataset.csv",
         "access_status": "open_access",
         "access_method": "publisher supplementary-information link",
         "access_date": "2026-05-26",
@@ -465,6 +465,12 @@
           "recommended_method": "use as an external validation and comparison source for MOF/plasmonic sensing records",
           "target_content": "MOF name, metal configuration, analyte phase, LOD, linear range, recovery, and DOI fields"
         },
+        "downloaded_files": [
+          "data/raw/external/db_mof_sers_zenodo_README.pdf",
+          "data/raw/external/db_mof_sers_zenodo_dataset.csv",
+          "data/raw/external/db_mof_sers_zenodo_dataset.xlsx",
+          "data/raw/external/db_mof_sers_zenodo_pore_diameters.xlsx"
+        ],
         "notes": "Best overlap with this project because it combines material/substrate, analyte, performance metrics, and bibliographic provenance. It is SERS-focused rather than photonic-crystal-focused, so values should be used for comparison rather than automatic replacement."
       },
       {
@@ -473,7 +479,7 @@
         "source_type": "optical_property_database",
         "url": "https://opticalmaterials.org/databases/",
         "doi": "10.1038/s41597-022-01295-5",
-        "raw_file": "",
+        "raw_file": "data/raw/external/db_opticalmaterials_scidata_database.csv",
         "access_status": "open_access",
         "access_method": "website query or CSV/JSON/SQL download",
         "access_date": "2026-05-28",
@@ -500,6 +506,10 @@
           "recommended_method": "query by material, compound formula, SMILES, or DOI for optical-property cross-checks",
           "target_content": "refractive index, dielectric constant, wavelength, extracted value, raw value, and DOI"
         },
+        "downloaded_files": [
+          "data/raw/external/db_opticalmaterials_scidata_database.csv",
+          "data/raw/external/db_opticalmaterials_master.zip"
+        ],
         "notes": "Useful for checking whether reported refractive-index-related sensor behavior is physically plausible and for enriching material/analyte optical context."
       },
       {
@@ -508,7 +518,7 @@
         "source_type": "optical_constants_database",
         "url": "https://github.com/polyanskiy/refractiveindex.info-database",
         "doi": "10.1038/s41597-023-02898-2",
-        "raw_file": "",
+        "raw_file": "data/raw/external/db_refractiveindex_info_database_main.zip",
         "access_status": "open_source",
         "access_method": "GitHub YAML database or refractiveindex.info website",
         "access_date": "2026-05-28",
@@ -534,6 +544,9 @@
           "recommended_method": "lookup materials and optical constants for photonic layers, metals, and sensor environments",
           "target_content": "n/k values, wavelength range, material page, and source reference"
         },
+        "downloaded_files": [
+          "data/raw/external/db_refractiveindex_info_database_main.zip"
+        ],
         "notes": "Best reference source for optical constants of materials used in photonic and plasmonic sensor architectures. It usually validates material properties rather than sensor performance metrics."
       },
       {
@@ -542,10 +555,10 @@
         "source_type": "chemical_database",
         "url": "https://pubchem.ncbi.nlm.nih.gov/",
         "doi": "",
-        "raw_file": "",
+        "raw_file": "data/raw/external/db_pubchem_analytes_compounds.json",
         "access_status": "open_access",
         "access_method": "PUG-REST API or web lookup",
-        "access_date": "2026-05-26",
+        "access_date": "2026-05-28",
         "license": "NIH/NLM open data terms; verify per downloaded record",
         "expected_data_volume": "metadata_only",
         "estimated_records": 0,
@@ -554,6 +567,9 @@
         "extraction_strategy": {
           "recommended_method": "API lookup for standardized analyte names and formulae only"
         },
+        "downloaded_files": [
+          "data/raw/external/db_pubchem_analytes_compounds.json"
+        ],
         "notes": "Does not provide sensor-performance values; use only for chemical-name normalization."
       },
       {
@@ -562,10 +578,10 @@
         "source_type": "full_text_database",
         "url": "https://pmc.ncbi.nlm.nih.gov/",
         "doi": "",
-        "raw_file": "",
+        "raw_file": "data/raw/external/db_pmc_open_access_idconv.json",
         "access_status": "open_access_with_article_specific_licenses",
         "access_method": "PMC article page and PDF where available",
-        "access_date": "2026-05-26",
+        "access_date": "2026-05-28",
         "license": "article-specific open-access license",
         "expected_data_volume": "metadata_and_fulltext",
         "estimated_records": 0,
@@ -574,6 +590,12 @@
         "extraction_strategy": {
           "recommended_method": "use as a fallback full-text mirror for open biomedical/nanophotonic papers"
         },
+        "downloaded_files": [
+          "data/raw/external/db_pmc_open_access_idconv.json",
+          "data/raw/external/db_pmc_open_access_7284782.xml",
+          "data/raw/external/db_pmc_open_access_5296759.xml",
+          "data/raw/external/db_pmc_open_access_7297992.xml"
+        ],
         "notes": "Use only when publisher HTML is unavailable or to cross-check open-access status."
       }
     ],
