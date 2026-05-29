@@ -10,6 +10,7 @@ sys.path.insert(0, str(ROOT / "scripts"))
 
 from extract_llm_candidates import (  # noqa: E402
     build_messages,
+    metric_snippets,
     normalize_candidate,
     select_candidate_pages,
 )
@@ -40,6 +41,16 @@ def test_select_candidate_pages_prefers_metric_text() -> None:
     assert "42 nm/RIU" in selected[0]["text"]
 
 
+def test_metric_snippets_keeps_context_near_keywords() -> None:
+    text = "fabrication " * 200 + "The limit of detection was 2 ppm for the sensor."
+
+    snippet = metric_snippets(text, max_chars=180)
+
+    assert "limit of detection" in snippet
+    assert "2 ppm" in snippet
+    assert len(snippet) <= 180
+
+
 def test_build_messages_requests_json_candidates() -> None:
     source = make_source()
     messages = build_messages(
@@ -47,10 +58,12 @@ def test_build_messages_requests_json_candidates() -> None:
         pages=[{"page": 2, "score": 2, "text": "LOD was 2 ppm."}],
         columns=["record_id", "measurement_type", "measurement_value"],
         allowed_types={"limit_of_detection"},
+        max_candidates=3,
     )
 
     joined = "\n".join(message["content"] for message in messages)
     assert "strict JSON" in joined
+    assert "no more than 3" in joined
     assert "limit_of_detection" in joined
     assert source.source_id in joined
 

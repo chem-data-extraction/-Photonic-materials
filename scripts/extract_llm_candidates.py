@@ -22,6 +22,7 @@ SCHEMA_PATH = ROOT / "specs/dataset_schema.json"
 DEFAULT_API_BASE = "https://api.deepseek.com"
 DEFAULT_MODEL = "deepseek-v4-pro"
 DEFAULT_OUTPUT = ROOT / "data/extracted/llm_candidate_records.jsonl"
+DEFAULT_MAX_CANDIDATES = 4
 
 METRIC_KEYWORDS = (
     "sensitivity",
@@ -69,6 +70,55 @@ def compact_text(text: str, max_chars: int) -> str:
     return text[: max_chars - 3].rstrip() + "..."
 
 
+def metric_snippets(text: str, max_chars: int) -> str:
+    compact = re.sub(r"\s+", " ", text).strip()
+    if len(compact) <= max_chars:
+        return compact
+
+    lowered = compact.lower()
+    positions = sorted(
+        {
+            match.start()
+            for keyword in METRIC_KEYWORDS
+            for match in re.finditer(re.escape(keyword), lowered)
+        }
+    )
+    if not positions:
+        return compact_text(compact, max_chars)
+
+    window = max(220, min(520, max_chars // 3))
+    snippets: list[str] = []
+    used = 0
+    last_end = -1
+    for pos in positions:
+        start = max(0, pos - window)
+        end = min(len(compact), pos + window)
+        if end - start > max_chars:
+            half = max_chars // 2
+            start = max(0, pos - half)
+            end = min(len(compact), start + max_chars)
+            start = max(0, end - max_chars)
+        if start <= last_end:
+            if snippets:
+                extension = compact[last_end:end]
+                if used + len(extension) > max_chars:
+                    break
+                snippets[-1] += extension
+                used += len(extension)
+                last_end = end
+            continue
+
+        snippet = compact[start:end].strip()
+        separator = " ... " if snippets else ""
+        if used + len(separator) + len(snippet) > max_chars:
+            break
+        snippets.append(separator + snippet)
+        used += len(separator) + len(snippet)
+        last_end = end
+
+    return "".join(snippets) if snippets else compact_text(compact, max_chars)
+
+
 def metric_score(text: str) -> int:
     lowered = text.lower()
     return sum(lowered.count(keyword) for keyword in METRIC_KEYWORDS)
@@ -95,7 +145,7 @@ def select_candidate_pages(
         {
             "page": page_number,
             "score": score,
-            "text": compact_text(text, max_chars_per_page),
+            "text": metric_snippets(text, max_chars_per_page),
         }
         for score, page_number, text in selected
     ]
@@ -107,6 +157,7 @@ def build_messages(
     pages: list[dict[str, Any]],
     columns: list[str],
     allowed_types: set[str],
+    max_candidates: int = DEFAULT_MAX_CANDIDATES,
 ) -> list[dict[str, str]]:
     system_prompt = (
         "You extract candidate structured records for a photonic-material optical-sensing "
@@ -117,6 +168,13 @@ def build_messages(
     )
     user_payload = {
         "task": "Return JSON with a records array of review-only candidate records.",
+        "max_records": max_candidates,
+        "output_limits": {
+            "records": f"at most {max_candidates}",
+            "evidence_text": "at most 30 words",
+            "notes": "at most 25 words",
+            "review_reason": "at most 20 words",
+        },
         "json_shape": {
             "records": [
                 {
@@ -145,6 +203,10 @@ def build_messages(
             "Use source_id, source_url, doi, and raw_file from the source object.",
             "Set needs_review to true for every record.",
             "Do not include review-article summary values unless the text gives a primary measurement.",
+            f"Return no more than {max_candidates} highest-confidence records for this source.",
+            "Prefer complete, schema-ready records over partial or ambiguous measurements.",
+            "Keep evidence_text, notes, and review_reason short.",
+            "Do not include markdown, explanations, citations outside evidence_text, or extra keys.",
         ],
         "pages": pages,
     }
@@ -319,7 +381,8 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
     parser.add_argument("--api-base", default=os.getenv("DEEPSEEK_API_BASE", defaults.get("api_base", DEFAULT_API_BASE)))
     parser.add_argument("--max-pages-per-source", type=int, default=int(defaults.get("max_pages_per_source", 4)))
     parser.add_argument("--max-chars-per-page", type=int, default=int(defaults.get("max_chars_per_page", 4500)))
-    parser.add_argument("--max-tokens", type=int, default=int(defaults.get("max_tokens", 3500)))
+    parser.add_argument("--max-candidates", type=int, default=int(defaults.get("max_candidates_per_source", DEFAULT_MAX_CANDIDATES)))
+    parser.add_argument("--max-tokens", type=int, default=int(defaults.get("max_tokens", 3000)))
     parser.add_argument("--timeout", type=int, default=int(defaults.get("timeout_seconds", 90)))
     return parser.parse_args(argv)
 
@@ -342,7 +405,13 @@ def main(argv: list[str] | None = None) -> int:
                 max_pages=args.max_pages_per_source,
                 max_chars_per_page=args.max_chars_per_page,
             )
-            messages = build_messages(source=source, pages=pages, columns=columns, allowed_types=allowed_types)
+            messages = build_messages(
+                source=source,
+                pages=pages,
+                columns=columns,
+                allowed_types=allowed_types,
+                max_candidates=args.max_candidates,
+            )
             print(f"{source.source_id}: pages {[page['page'] for page in pages]}, prompt chars {sum(len(m['content']) for m in messages)}")
         return 0
 
@@ -359,7 +428,13 @@ def main(argv: list[str] | None = None) -> int:
             max_pages=args.max_pages_per_source,
             max_chars_per_page=args.max_chars_per_page,
         )
-        messages = build_messages(source=source, pages=pages, columns=columns, allowed_types=allowed_types)
+        messages = build_messages(
+            source=source,
+            pages=pages,
+            columns=columns,
+            allowed_types=allowed_types,
+            max_candidates=args.max_candidates,
+        )
         response = call_deepseek(
             api_key=api_key,
             api_base=args.api_base,
