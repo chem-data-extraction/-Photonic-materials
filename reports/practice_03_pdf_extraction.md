@@ -23,6 +23,14 @@ The script used for extraction is:
 python scripts/extract_pdf.py
 ```
 
+The rule-based PDF extractor remains the reproducible source of final PDF records. An additional optional DeepSeek helper can be used for candidate discovery:
+
+```bash
+python scripts/extract_llm_candidates.py --source-id paper_wang_2022_uio66_pc
+```
+
+This helper requires `DEEPSEEK_API_KEY` and writes review-only JSONL candidates to `data/extracted/llm_candidate_records.jsonl`. That file is ignored by Git and is not consumed by `scripts/build_dataset.py`.
+
 It performs the following steps automatically:
 
 1. Reads `specs/source_map.json`.
@@ -32,6 +40,15 @@ It performs the following steps automatically:
 5. Applies source-specific regex rules to primary sources.
 6. Writes rows using the exact schema from `specs/dataset_schema.json`.
 7. Logs every scanned PDF, including review PDFs skipped because they are not primary extraction sources.
+
+The DeepSeek helper follows a different, candidate-only path:
+
+1. Reads the same source map and schema.
+2. Extracts PDF text with the same PyMuPDF text layer.
+3. Scores pages with sensing-performance keywords such as `sensitivity`, `LOD`, `Q factor`, `response time`, `nm/RIU`, and `ppm`.
+4. Sends compact metric-centered snippets to the DeepSeek chat API.
+5. Receives schema-shaped candidate records with `evidence_text`, `evidence_page`, `llm_confidence`, and `needs_review=true`.
+6. Leaves all final CSV files unchanged until a reviewer manually promotes a candidate.
 
 ## PDFs scanned
 
@@ -98,6 +115,7 @@ dataset row        -> sensitivity = 190000 nm/RIU
 - Source-specific regex rules are used instead of one generic regex because the same metric is phrased differently across articles.
 - For Zaky et al. 2020, records are retained but notes explicitly mark the sensor as theoretical.
 - For Shaban et al. 2017, the PBG-width glucose slope is stored as `sensitivity` because the schema does not have a separate PBG-width-slope metric.
+- DeepSeek candidates are not accepted as final PDF records by default. They are useful for finding values missed by source-specific regex rules, but they must be checked against source evidence before inclusion.
 
 ## Tests
 
@@ -112,11 +130,16 @@ The tests check that:
 - key numeric values are extracted correctly from PDF text;
 - extracted rows match `specs/dataset_schema.json`.
 
+The optional LLM helper is covered separately by `tests/test_llm_candidate_extraction.py`. These tests do not call DeepSeek; they check page selection, metric-centered snippets, JSON prompt construction, and candidate normalization.
+
 ## Output files
 
 - `specs/pdf_extraction_manifest.json` - automatic extraction plan and rule inventory.
+- `specs/llm_extraction_manifest.json` - optional DeepSeek candidate-extraction plan.
 - `scripts/extract_pdf.py` - automatic PyMuPDF and regex extraction script.
+- `scripts/extract_llm_candidates.py` - optional DeepSeek helper for review-only candidate records.
 - `data/extracted/pdf_extracted_records.csv` - schema-aligned PDF records.
+- `data/extracted/llm_candidate_records.jsonl` - optional local candidate output, ignored by Git and excluded from final merges.
 - `data/extracted/extraction_log.jsonl` - JSONL audit trail for all scanned PDFs.
 - `data/interim/merged_records.csv` - merged table after `scripts/build_dataset.py`.
 - `data/processed/dataset.csv` - cleaned dataset after `scripts/clean_dataset.py`.

@@ -30,13 +30,17 @@ These databases have been downloaded to `data/raw/external/` and inventoried in 
 
 PDF extraction produced 22 records from 6 primary PDF articles. Web extraction produced 20 records from 4 article HTML/PMC pages, including 8 additional Nazeri et al. table values for HC-PCF sensor A/B spectral shifts and RI sensitivities. See Practice 3 and Practice 4 reports for extraction rules and mapping decisions.
 
+An optional DeepSeek LLM helper was added as a candidate-discovery layer for PDF text. It uses `DEEPSEEK_API_KEY`, selects metric-heavy PDF snippets, requests schema-shaped JSON from DeepSeek, and writes review-only candidates to `data/extracted/llm_candidate_records.jsonl`. These candidates are not merged into the publication dataset automatically.
+
 ## Cleaning and normalization summary
 
 `scripts/build_dataset.py` merged PDF and web records into 42 rows. `scripts/clean_dataset.py` aligned schema columns, normalized missing tokens and confidence labels, and deduplicated by `record_id`. Units are preserved as reported because the schema combines heterogeneous performance metrics.
 
+The LLM candidate file is intentionally outside the merge list. This protects the final dataset from unreviewed model output while still allowing the project to use DeepSeek for discovery of values that may deserve later manual verification.
+
 ## Validation summary
 
-`python scripts/validate_project.py` passed on `2026-05-29`. `pytest -q` passed with 14 tests.
+`python scripts/validate_project.py` passed on `2026-05-29`. The original extraction and publication tests passed with 14 tests. The DeepSeek helper adds 4 offline tests for candidate-page selection, prompt construction, metric snippets, and record normalization; these tests do not require an API key.
 
 ## Limitations
 
@@ -49,6 +53,7 @@ Coverage is strongest for gas and refractive-index sensing. Biosensing coverage 
 | Processed dataset | `data/processed/dataset.csv` |
 | Schema | `specs/dataset_schema.json` |
 | Source map | `specs/source_map.json` |
+| LLM extraction manifest | `specs/llm_extraction_manifest.json` |
 | Dataset card | `dataset_card.md` |
 | Citation | `CITATION.cff` |
 | License | `LICENSE` |

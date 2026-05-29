@@ -92,6 +92,12 @@ Extraction should start with primary sources that are open access, contain direc
 
 Reviews are lower priority for extraction because they may repeat values from primary papers. Their main role is source discovery and vocabulary normalization.
 
+## Optional LLM support for source triage
+
+The source map remains the authority for `source_id`, access status, raw-file paths, and extraction priority. The optional DeepSeek workflow does not add new sources automatically. It can help triage already mapped PDF sources by locating metric-heavy pages and drafting candidate records, but those candidates still inherit `source_id`, DOI, source URL, and raw-file provenance from `specs/source_map.json`.
+
+For review articles, the LLM may be useful for finding terminology and possible primary-paper leads, but review-derived numeric values should not be promoted directly into the processed dataset unless they are traced back to the original article.
+
 ## Access conditions
 
 Most selected primary sources are open-access publisher articles or open institutional/publisher PDFs. ACS material is marked separately because reuse may be governed by publisher terms. Supplementary files must be checked individually before derived data are redistributed.
@@ -104,6 +110,8 @@ Required fields in the source map:
 - `license` records the known or expected reuse condition; uncertain entries explicitly say that reuse terms must be verified.
 
 No API key is required for PubChem, Crossref, or OpenAlex for the planned metadata checks. Semantic Scholar may require rate-limit handling if used at scale.
+
+The optional DeepSeek candidate extractor is different from these metadata checks: it requires a `DEEPSEEK_API_KEY` environment variable and is documented separately in `specs/llm_extraction_manifest.json` and `README.md`.
 
 ## Expected data types
 

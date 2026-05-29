@@ -45,6 +45,12 @@ The script:
 
 Manual curation is used for the same reason as in Practice 3: the target values are short scalar metrics embedded in prose, captions, or compact tables, and the course schema needs a controlled mapping of one numeric metric to one record.
 
+## Relation to the DeepSeek helper
+
+The current DeepSeek script is attached to local PDF text, not to live web pages. Web records in this practice therefore remain curated from `specs/web_extraction_manifest.json` and are exported deterministically by `scripts/extract_web.py`.
+
+The same review policy can be reused for future HTML support: an LLM may draft candidate rows from downloaded article snapshots, but the final web CSV should only include values after checking validation terms, table context, article section, unit, and source provenance.
+
 ## Extracted records
 
 The web extraction produced 20 schema-aligned records:
@@ -74,6 +80,7 @@ All rows use the Practice 1 schema:
 - Some values appear in figure discussion rather than table cells, so simple automatic selectors are not reliable enough for unattended extraction.
 - Units are not normalized in this practice. The reported units are preserved (`nm`, `pm`, `nm/RIU`); unit harmonization remains part of Practice 5.
 - Negative wavelength shifts are allowed when the source reports a directional spectral shift. This applies to the methane record from Nazeri et al.
+- If LLM-assisted HTML extraction is added later, prompts should use local snapshots rather than live pages so that evidence text remains reproducible.
 
 ## Output files
 

@@ -16,6 +16,12 @@ The practical goal is to make reported sensor performance comparable across pape
 
 This means that one paper can contribute multiple records. For example, the same UiO-66 photonic crystal sensor may have separate records for sensitivity, limit_of_detection, response_time, recovery_time, wavelength_shift, quality_factor, resolution, and detection_range.
 
+## LLM-assisted candidate records
+
+The schema is also used by the optional DeepSeek helper added after the main extraction pipeline. Its output is deliberately called a candidate record, not a final dataset record. A candidate becomes a final record only after a human reviewer checks the source evidence, confirms the page or section, verifies the value and unit, and copies the schema-aligned row into a curated CSV or manifest.
+
+This keeps the Practice 1 definition stable: the LLM can suggest rows in the same shape as `specs/dataset_schema.json`, but it cannot relax the requirement that every final record must be supported by a specific source text fragment.
+
 ## Examples of Records
 
 Literal example row from `data/processed/dataset.csv`:
@@ -68,6 +74,7 @@ The machine-readable schema is stored in `specs/dataset_schema.json`. The final 
 - If units differ across papers, keep the reported unit in `measurement_unit`. Unit normalization rules will be finalized in Practice 5.
 - If operating wavelength, sensing medium, concentration range, temperature, or fabrication details are important for a record, write them in `notes` instead of adding sparse columns.
 - If operating wavelength is not explicitly reported, do not infer it from figures without documentation.
+- If a value is suggested by the DeepSeek candidate extractor, treat it as `needs_review=true` until evidence text, page number, measurement type, numeric value, and unit are checked against the original source.
 
 ## Initial Raw Sources Downloaded
 
